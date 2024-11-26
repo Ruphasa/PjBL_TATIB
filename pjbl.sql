@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 02:44 AM
+-- Generation Time: Nov 26, 2024 at 08:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,21 +28,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `user` varchar(50) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `jurusan` int(10) NOT NULL,
-  `id_admin` int(11) NOT NULL
+  `id_admin` varchar(20) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jurusan`
+-- Table structure for table `dosen`
 --
 
-CREATE TABLE `jurusan` (
-  `id_jurusan` int(10) NOT NULL,
-  `nama` varchar(20) NOT NULL
+CREATE TABLE `dosen` (
+  `NIP` varchar(20) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `kelas` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -59,6 +60,19 @@ CREATE TABLE `kelas` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mahasiswa`
+--
+
+CREATE TABLE `mahasiswa` (
+  `NIM` varchar(20) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `kelas` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pelanggaran`
 --
 
@@ -68,7 +82,7 @@ CREATE TABLE `pelanggaran` (
   `id_terlapor` varchar(20) NOT NULL,
   `id_dpa` varchar(20) NOT NULL,
   `id_tatib` int(11) NOT NULL,
-  `id_jurusan` int(10) NOT NULL,
+  `sanksi` varchar(255) NOT NULL,
   `lampiran` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -96,19 +110,6 @@ CREATE TABLE `tatib` (
   `level` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `id_user` varchar(20) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `kelas` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- Indexes for dumped tables
 --
@@ -117,14 +118,14 @@ CREATE TABLE `user` (
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`),
-  ADD KEY `jurusan` (`jurusan`);
+  ADD PRIMARY KEY (`id_admin`);
 
 --
--- Indexes for table `jurusan`
+-- Indexes for table `dosen`
 --
-ALTER TABLE `jurusan`
-  ADD PRIMARY KEY (`id_jurusan`);
+ALTER TABLE `dosen`
+  ADD PRIMARY KEY (`NIP`),
+  ADD KEY `kelas` (`kelas`);
 
 --
 -- Indexes for table `kelas`
@@ -134,15 +135,20 @@ ALTER TABLE `kelas`
   ADD KEY `id_prodi` (`id_prodi`);
 
 --
+-- Indexes for table `mahasiswa`
+--
+ALTER TABLE `mahasiswa`
+  ADD PRIMARY KEY (`NIM`),
+  ADD KEY `kelas` (`kelas`);
+
+--
 -- Indexes for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
   ADD PRIMARY KEY (`id_pelanggaran`),
-  ADD KEY `id_pelapor` (`id_pelapor`),
-  ADD KEY `id_terlapor` (`id_terlapor`),
-  ADD KEY `id_dpa` (`id_dpa`),
   ADD KEY `id_tatib` (`id_tatib`),
-  ADD KEY `id_jurusan` (`id_jurusan`);
+  ADD KEY `id_dpa` (`id_dpa`),
+  ADD KEY `id_terlapor` (`id_terlapor`);
 
 --
 -- Indexes for table `prodi`
@@ -158,21 +164,8 @@ ALTER TABLE `tatib`
   ADD PRIMARY KEY (`id_tatib`);
 
 --
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`),
-  ADD KEY `kelas` (`kelas`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tatib`
@@ -185,10 +178,10 @@ ALTER TABLE `tatib`
 --
 
 --
--- Constraints for table `admin`
+-- Constraints for table `dosen`
 --
-ALTER TABLE `admin`
-  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`jurusan`) REFERENCES `jurusan` (`id_jurusan`);
+ALTER TABLE `dosen`
+  ADD CONSTRAINT `dosen_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `kelas` (`id_kelas`);
 
 --
 -- Constraints for table `kelas`
@@ -197,26 +190,24 @@ ALTER TABLE `kelas`
   ADD CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_prodi`) REFERENCES `prodi` (`id_prodi`);
 
 --
+-- Constraints for table `mahasiswa`
+--
+ALTER TABLE `mahasiswa`
+  ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `kelas` (`id_kelas`);
+
+--
 -- Constraints for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
-  ADD CONSTRAINT `pelanggaran_ibfk_1` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusan` (`id_jurusan`),
-  ADD CONSTRAINT `pelanggaran_ibfk_2` FOREIGN KEY (`id_tatib`) REFERENCES `tatib` (`id_tatib`),
-  ADD CONSTRAINT `pelanggaran_ibfk_3` FOREIGN KEY (`id_dpa`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `pelanggaran_ibfk_4` FOREIGN KEY (`id_terlapor`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `pelanggaran_ibfk_5` FOREIGN KEY (`id_pelapor`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `pelanggaran_ibfk_1` FOREIGN KEY (`id_dpa`) REFERENCES `dosen` (`NIP`),
+  ADD CONSTRAINT `pelanggaran_ibfk_2` FOREIGN KEY (`id_terlapor`) REFERENCES `mahasiswa` (`NIM`),
+  ADD CONSTRAINT `pelanggaran_ibfk_3` FOREIGN KEY (`id_tatib`) REFERENCES `tatib` (`id_tatib`);
 
 --
 -- Constraints for table `prodi`
 --
 ALTER TABLE `prodi`
   ADD CONSTRAINT `prodi_ibfk_1` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusan` (`id_jurusan`);
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `kelas` (`id_kelas`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
