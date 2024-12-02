@@ -1,94 +1,125 @@
+<?php
+include('lib/Session.php');
+
+$session = new Session();
+
+if ($session->get('is_login') === true) {
+    header('Location: index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Politeknik Negeri Malang Login</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #2c3e50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background-color: #ecf0f1;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .login-container img {
-            width: 40%;
-            margin-bottom: 20px;
-        }
-        .login-container .alert {
-            background-color: rgba(255, 10, 10, 0.5);
-            color: #d35400;
-            padding: 10px;
-            border-radius: 5px;
-            width: 60%;
-            margin: 0 auto;
-            margin-bottom: 20px;
-        }
-        .login-container .btn-custom {
-            background-color: #e67e22;
-            color: white;
-        }
-        .login-container .btn-custom:hover {
-            background-color: #d35400;
-        }
-        .login-container input[type="text"], .login-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-        }
-        .login-container input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        .login-container .login-button {
-            background-color: #1abc9c;
-            color: white;
-        }
-        .login-container .forgot-password {
-            display: block;
-            margin-top: 10px;
-            color: #3498db;
-            text-decoration: none;
-        }
-        .login-container .footer {
-            margin-top: 20px;
-            color: #7f8c8d;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Log in (v2)</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="adminlte/dist/css/adminlte.min.css">
 </head>
-<body>
-    <div class="login-container">
-        <img src="https://siakad.polinema.ac.id/assets/global/img/logo-polinema.png" alt="Politeknik Negeri Malang Logo">
-        <div class="alert">Masukkan Username dan Password (Menggunakan NIM & password)</div>
-        <button class="btn btn-warning btn-block mb-2" style="width: 50%; margin: 0 auto">PEMBAYARAN DAFTAR ULANG</button>
-        <button class="btn btn-danger btn-block mb-4" style="width: 45%; margin: 0 auto">LIHAT MEKANISME</button>
-        <form>
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <div>
-                <input type="checkbox" id="show-password">
-                <label for="show-password">Tampilkan Password</label>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center"><a href="/" class="h1"><b>Admin</b>LTE</a></div>
+            <div class="card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+                <?php
+                $status = $session->getFlash('status');
+
+                if ($status === false) {
+                    $message = $session->getFlash('message');
+                    echo '<div class="alert alert-warning">' . $message .
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></div>';
+                }
+                ?>
+                <form action="action/auth.php?act=login" method="post" id="form-login">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Remember Me</label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
-            <a href="#" class="forgot-password">Lupa Password?</a>
-        </form>
-        <div class="footer">
-            2016 © Sistem Informasi Akademik - 3
+            <!-- /.card-body -->
         </div>
+        <!-- /.card -->
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="adminlte/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="adminlte/dist/js/adminlte.min.js"></script>
+    <script src="adminlte/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="adminlte/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="adminlte/plugins/jquery-validation/localization/messages_id.min.js"></script>
+
+    <script>
+  // maksud nya adl ketika dokumen sudah siap (html telah d render oleh browser) maka jalankan fungsi berikut ini
+        $(document).ready(function () {
+            $('#form-login').validate({
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 255
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.input-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        }); 
+    </script>
 </body>
+
 </html>
