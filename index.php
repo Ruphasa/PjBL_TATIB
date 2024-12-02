@@ -1,94 +1,109 @@
+<?php
+include('lib/Session.php');
+$session = new Session();
+if ($session->get('is_login') !== true) {
+  header('Location: login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Politeknik Negeri Malang Login</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #2c3e50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background-color: #ecf0f1;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .login-container img {
-            width: 40%;
-            margin-bottom: 20px;
-        }
-        .login-container .alert {
-            background-color: rgba(255, 10, 10, 0.5);
-            color: #d35400;
-            padding: 10px;
-            border-radius: 5px;
-            width: 60%;
-            margin: 0 auto;
-            margin-bottom: 20px;
-        }
-        .login-container .btn-custom {
-            background-color: #e67e22;
-            color: white;
-        }
-        .login-container .btn-custom:hover {
-            background-color: #d35400;
-        }
-        .login-container input[type="text"], .login-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-        }
-        .login-container input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        .login-container .login-button {
-            background-color: #1abc9c;
-            color: white;
-        }
-        .login-container .forgot-password {
-            display: block;
-            margin-top: 10px;
-            color: #3498db;
-            text-decoration: none;
-        }
-        .login-container .footer {
-            margin-top: 20px;
-            color: #7f8c8d;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Blank Page</title>
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="adminlte/plugins/datatablesbs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="adminlte/plugins/datatablesresponsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="adminlte/plugins/datatablesbuttons/css/buttons.bootstrap4.min.css">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="adminLTE/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="adminLTE/dist/css/adminlte.min.css">
+  <!-- jQuery -->
+  <script src="adminLTE/plugins/jquery/jquery.min.js"></script>
 </head>
-<body>
-    <div class="login-container">
-        <img src="https://siakad.polinema.ac.id/assets/global/img/logo-polinema.png" alt="Politeknik Negeri Malang Logo">
-        <div class="alert">Masukkan Username dan Password (Menggunakan NIM & password)</div>
-        <button class="btn btn-warning btn-block mb-2" style="width: 50%; margin: 0 auto">PEMBAYARAN DAFTAR ULANG</button>
-        <button class="btn btn-danger btn-block mb-4" style="width: 45%; margin: 0 auto">LIHAT MEKANISME</button>
-        <form>
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <div>
-                <input type="checkbox" id="show-password">
-                <label for="show-password">Tampilkan Password</label>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
-            <a href="#" class="forgot-password">Lupa Password?</a>
-        </form>
-        <div class="footer">
-            2016 © Sistem Informasi Akademik - 3
-        </div>
+
+<body class="hold-transition sidebar-mini">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <?php include('layouts/header.php'); ?>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="adminLTE/index3.html" class="brand-link">
+        <img src="adminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">AdminLTE 3</span>
+      </a>
+
+      <!-- Sidebar -->
+      <?php include('layouts/sidebar.php'); ?>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <?php
+      $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+      switch (strtolower($page)) {
+        case 'dashboard':
+          include('pages/dashboard.php');
+          break;
+        case 'buku':
+          include('pages/buku.php');
+          break;
+        case 'kategori':
+          include('pages/kategori.php');
+          break;
+        case 'user':
+          include('pages/user.php');
+          break;
+      }
+      ?>
+      <!-- /.content -->
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- /.content-wrapper -->
+    <?php include('layouts/footer.php'); ?>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+
+  <!-- Bootstrap 4 -->
+  <script src="adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery Validation -->
+  <script src="adminlte/plugins/jquery-validation/jquery.validate.min.js"></script>
+  <script src="adminlte/plugins/jquery-validation/additional-methods.min.js"></script>
+  <script src="adminlte/plugins/jquery-validation/localization/messages_id.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="adminlte/plugins/datatablesresponsive/js/dataTables.responsive.min.js"></script>
+  <script src="adminlte/plugins/datatablesresponsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="adminlte/plugins/jszip/jszip.min.js"></script>
+  <script src="adminlte/plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="adminlte/plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="adminlte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="adminlte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="adminLTE/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="adminLTE/dist/js/demo.js"></script>
 </body>
+
 </html>
