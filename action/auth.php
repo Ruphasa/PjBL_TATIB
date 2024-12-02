@@ -36,19 +36,19 @@ if ($act == 'login') {
         $session->set('name', $dataMahasiswa['nama']);
         $session->commit();
 
-        header('Location: ../index.php');
+        header('Location: ../mahasiswa/mahasiswaIndex.php');
     } else if ($dataAdmin && $dataAdmin['password'] == $password) {
         $session->set('is_login', true);
         $session->set('name', $dataAdmin['nama']);
         $session->commit();
 
-        header('Location: ../index.php');
+        header('Location: ../admin/adminIndex.php');
     } else if ($dataDosen && $dataDosen['password'] == $password) {
         $session->set('is_login', true);
         $session->set('name', $dataDosen['nama']);
         $session->commit();
 
-        header('Location: ../index.php');
+        header('Location: ../dosen/dosenIndex.php');
     } else {
         $session->setFlash('status', false);
         $session->setFlash('message', 'Username dan password salah.');
