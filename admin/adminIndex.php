@@ -1,9 +1,11 @@
 <?php
 include('../lib/Session.php');
+include('../lib/Connection.php');
 $session = new Session();
 if ($session->get('is_login') !== true) {
   header('Location: ../login.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +39,30 @@ if ($session->get('is_login') !== true) {
   <div class="wrapper">
     <!-- Navbar -->
     <?php include('../layouts/header.php'); ?>
+    
+    <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelanggar Prodi TI</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pelanggar Prodi TI</h1>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
@@ -53,9 +79,13 @@ if ($session->get('is_login') !== true) {
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <?php
-      $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+    <!-- Content Header (Page header) -->
+    <section class="content">
+        <div class="container-fluid">
+            <h1>Pelanggar Prodi TI</h1>
+             <?php
+             
+            $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
       switch (strtolower($page)) {
         case 'dashboard':
           include('../pages/dashboard.php');
@@ -71,8 +101,62 @@ if ($session->get('is_login') !== true) {
           break;
       }
       ?>
+        </div>
+    </section>
+      <!-- Content Header (Page header) -->
       <!-- /.content -->
+      <section class="content">
+    <div class="container-fluid">
+        <!-- Card Wrapper -->
+        <div class="card">
+            <!-- Card Header -->
+            <div class="card-header">
+                <h3 class="card-title">Data Pelanggar Prodi TI</h3>
+            </div>
+            <!-- /.Card Header -->
+
+            <!-- Card Body -->
+            <div class="card-body">
+                <!-- Tabel -->
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Pelapor</th>
+                            <th>Pelaku</th>
+                            <th>Pelanggaran</th>
+                            <th>Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Contoh data dummy (ganti dengan query database Anda)
+                        $data = [
+                            ['tanggal' => '2024-01-01', 'pelapor' => 'John', 'pelaku' => 'Doe', 'pelanggaran' => 'Tidak Memakai Masker', 'level' => 'Sedang'],
+                            ['tanggal' => '2024-01-02', 'pelapor' => 'Jane', 'pelaku' => 'Smith', 'pelanggaran' => 'Merokok di Area Larangan', 'level' => 'Sedang'],
+                        ];
+
+                        foreach ($data as $index => $row) {
+                            echo "<tr>
+                                <td>" . ($index + 1) . "</td>
+                                <td>{$row['tanggal']}</td>
+                                <td>{$row['pelapor']}</td>
+                                <td>{$row['pelaku']}</td>
+                                <td>{$row['pelanggaran']}</td>
+                                <td>{$row['level']}</td>
+                            </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.Card Body -->
+        </div>
+        <!-- /.Card Wrapper -->
     </div>
+</section>
+
     <!-- /.content-wrapper -->
     <?php include('layouts/footer.php'); ?>
     <!-- Control Sidebar -->
