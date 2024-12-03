@@ -43,20 +43,16 @@ if ($act == 'login') {
         $session->commit();
 
         header('Location: ../admin/adminIndex.php');
-    } else if ($dataDosen && $dataDosen['password'] == $password) {
+    } else if ($dataDosen && $dataDosen ['password'] == $password) {
         $session->set('is_login', true);
         $session->set('name', $dataDosen['nama']);
         $session->commit();
 
         header('Location: ../dosen/dosenIndex.php');
     } else {
-        $session->setFlash('status', false);
-        $session->setFlash('message', 'Username dan password salah.');
+        $session->set('is_login', false);
         $session->commit();
         header('Location: ../login.php');
     }
-} else if ($act == 'logout') {
-    $session->deleteAll();
-    header('Location: ../login.php');
 }
 ?>

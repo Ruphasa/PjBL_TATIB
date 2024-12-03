@@ -6,11 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
+    <footer class="main-footer" style="position: absolute; bottom: 0; width: 100%;">
             <b>Version</b> 3.2.0
-        </div>
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
 </body>
 </html>

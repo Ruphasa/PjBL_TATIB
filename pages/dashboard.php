@@ -20,30 +20,67 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Selamat Datang</h3>
-
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
+            <h3 class="card-title"> <?php
+            if (isset($_SESSION['name'])) {
+                # code...
+                echo "Selamat Datang <b>" . $_SESSION['name'];
+            }
+            ?></h3>
         </div>
         <div class="card-body">
-            <?php
-            if (isset($_SESSION['username'])) {
-                # code...
-                echo "Selamat Datang <b>" . $_SESSION['username']."</b> anda login sebagai <b>".$_SESSION['level']."</b>";
-            }
-            ?>
         </div>
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Card Wrapper -->
+                <div class="card">
+                    <!-- Card Header -->
+                    <div class="card-header">
+                        <h3 class="card-title">Data Pelanggar Prodi TI</h3>
+                    </div>
+                    <!-- /.Card Header -->
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <!-- Tabel -->
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Pelapor</th>
+                                    <th>Pelaku</th>
+                                    <th>Pelanggaran</th>
+                                    <th>Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Contoh data dummy (ganti dengan query database Anda)
+                                $data = [
+                                    ['tanggal' => '2024-01-01', 'pelapor' => 'John', 'pelaku' => 'Doe', 'pelanggaran' => 'Tidak Memakai Masker', 'level' => 'Sedang'],
+                                    ['tanggal' => '2024-01-02', 'pelapor' => 'Jane', 'pelaku' => 'Smith', 'pelanggaran' => 'Merokok di Area Larangan', 'level' => 'Sedang'],
+                                ];
+
+                                foreach ($data as $index => $row) {
+                                    echo "<tr>
+                                <td>" . ($index + 1) . "</td>
+                                <td>{$row['tanggal']}</td>
+                                <td>{$row['pelapor']}</td>
+                                <td>{$row['pelaku']}</td>
+                                <td>{$row['pelanggaran']}</td>
+                                <td>{$row['level']}</td>
+                            </tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.Card Body -->
+                </div>
+                <!-- /.Card Wrapper -->
+            </div>
+        </section>
         <!-- /.card-body -->
-        <div class="card-footer">
-            Footer
-        </div>
-        <!-- /.card-footer-->
     </div>
     <!-- /.card -->
 </section>
