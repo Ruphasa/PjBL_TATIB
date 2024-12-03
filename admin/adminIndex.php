@@ -13,7 +13,7 @@ if ($session->get('is_login') !== true) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Blank Page</title>
+  <title>Siakad</title>
 
   <!-- DataTables -->
   <link rel="stylesheet" href="../adminLTE/plugins/datatablesbs4/css/dataTables.bootstrap4.min.css">
@@ -32,26 +32,13 @@ if ($session->get('is_login') !== true) {
 
   <!-- jQuery -->
   <script src="../adminLTE/plugins/jquery/jquery.min.js"></script>
-</head>
 
-<body class="hold-transition sidebar-mini">
-  <!-- Site wrapper -->
-  <div class="wrapper">
-    <!-- Navbar -->
-    <?php include('../layouts/header.php'); ?>
-
-    <!DOCTYPE html>
-    <html lang="id">
-
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Pelanggar Prodi TI</title>
-      <style>
-        table {
-          width: 100%;
-          border-collapse: collapse;
-        }
+  
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
         th,
         td {
@@ -66,13 +53,17 @@ if ($session->get('is_login') !== true) {
       </style>
     </head>
 
-    <body>
+    <body style="height:100%">
+      <!-- Site wrapper -->
+      <div class="wrapper" style="height:100%">
+        <!-- Navbar -->
+        <?php include('../layouts/header.php'); ?>
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="../adminLTE/index3.html" class="brand-link">
           <img src="" alt=""
-            class="brand-image img-circle elevation-3" style="opacity: .8">
+          class="brand-image img-circle elevation-3" style="opacity: .8">
           <span class="brand-text font-weight-light"></span>
         </a>
 
@@ -107,9 +98,8 @@ if ($session->get('is_login') !== true) {
           <?php include('../layouts/footer.php'); ?>
           </div>
         </section>
-        <!-- /.content-wrapper -->
-      </div>
-      <!-- ./wrapper -->
+      </div><!-- /.content-wrapper -->
+</div><!-- ./wrapper -->
 
       <!-- Bootstrap 4 -->
       <script src="../adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
