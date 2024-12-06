@@ -1,9 +1,11 @@
 <?php
 include('../lib/Session.php');
+include('../lib/Connection.php');
 $session = new Session();
 if ($session->get('is_login') !== true) {
   header('Location: ../login.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +13,7 @@ if ($session->get('is_login') !== true) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Blank Page</title>
+  <title>Siakad</title>
 
   <!-- DataTables -->
   <link rel="stylesheet" href="../adminLTE/plugins/datatablesbs4/css/dataTables.bootstrap4.min.css">
@@ -30,59 +32,73 @@ if ($session->get('is_login') !== true) {
 
   <!-- jQuery -->
   <script src="../adminLTE/plugins/jquery/jquery.min.js"></script>
+
+
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body style="height:100%">
   <!-- Site wrapper -->
-  <div class="wrapper">
+  <div class="wrapper" style="height:100%">
     <!-- Navbar -->
-    <?php include('layouts/header.php'); ?>
+    <?php include('../layouts/header.php'); ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
+      <!-- Brand Logo
       <a href="../adminLTE/index3.html" class="brand-link">
-        <img src="../adminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-          style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
-      </a>
+        <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light"></span>
+      </a> -->
 
       <!-- Sidebar -->
-      <?php include('layouts/sidebar.php'); ?>
+      <?php include('../layouts/sidebarAdmin.php'); ?>
       <!-- /.sidebar -->
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
-      <?php
-      $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
-      switch (strtolower($page)) {
-        case 'dashboard':
-          include('pages/dashboard.php');
-          break;
-        case 'buku':
-          include('pages/buku.php');
-          break;
-        case 'kategori':
-          include('pages/kategori.php');
-          break;
-        case 'user':
-          include('pages/user.php');
-          break;
-      }
-      ?>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    <?php include('layouts/footer.php'); ?>
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-  </div>
-  <!-- ./wrapper -->
+      <section class="content">
+        <div class="container-fluid">
+          <?php
 
+          $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+          switch (strtolower($page)) {
+            case 'dashboard':
+              include('../pages/dashboard.php');
+              break;
+            case 'pesan':
+              include('../pages/pesanAdmin.php');
+              break;
+            case 'pelanggaran':
+              include('pages/pelanggaran.php');
+              break;
+            case 'riwayat':
+              include('pages/riwayat.php');
+              break;
+          }
+          ?>
+          <?php include('../layouts/footer.php'); ?>
+        </div>
+      </section>
+    </div><!-- /.content-wrapper -->
+  </div><!-- ./wrapper -->
 
   <!-- Bootstrap 4 -->
   <script src="../adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

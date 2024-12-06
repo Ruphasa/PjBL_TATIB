@@ -43,7 +43,7 @@ if ($act == 'login') {
         $session->commit();
 
         header('Location: ../admin/adminIndex.php');
-    } else if ($dataDosen && $dataDosen ['password'] == $password) {
+    } else if ($dataDosen && $dataDosen['password'] == $password) {
         $session->set('is_login', true);
         $session->set('name', $dataDosen['nama']);
         $session->commit();
@@ -54,5 +54,8 @@ if ($act == 'login') {
         $session->commit();
         header('Location: ../login.php');
     }
+} else if ($act == 'logout') { // Logout case 
+    $session->deleteAll(); // Menghapus semua data sesi 
+    header('Location: ../login.php'); // Redirect ke halaman login 
 }
 ?>
