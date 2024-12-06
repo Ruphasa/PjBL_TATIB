@@ -29,6 +29,7 @@ if ($session->get('is_login') === true) {
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin: ;
         }
         .login-container img {
             width: 40%;
@@ -83,7 +84,7 @@ if ($session->get('is_login') === true) {
         <button class="btn btn-warning btn-block mb-2" style="width: 50%; margin: 0 auto">PEMBAYARAN DAFTAR ULANG</button>
         <button class="btn btn-danger btn-block mb-4" style="width: 45%; margin: 0 auto">LIHAT MEKANISME</button>
         <form action="action/auth.php?act=login" method="post">
-            <input type="text" placeholder="Username" name="username" required>
+            <input type="text" placeholder="NIP/NIM" name="id" required>
             <input type="password" placeholder="Password" name="password" required">
             <div>
                 <input type="checkbox" id="show-password">
@@ -105,7 +106,7 @@ if ($session->get('is_login') === true) {
         $(document).ready(function () {
             $('#form-login').validate({
                 rules: {
-                    username: {
+                    id: {
                         required: true,
                         minlength: 3,
                         maxlength: 20

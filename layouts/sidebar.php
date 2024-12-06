@@ -40,19 +40,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="adminIndex.php?page=verifikasi" class="nav-link">
+                    <a href="index.php?page=pelanggaranmu" class="nav-link">
                         <i class="bi bi-exclamation-circle" style="font-size: 2rem; color:606C7D"></i>
                         <p>Verifikasi</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="adminIndex.php?page=riwayat" class="nav-link">
+                    <a href="index.php?page=lapor" class="nav-link">
                         <i class="bi bi-clock" style="font-size: 2rem; color:606C7D"></i>
                         <p>Riwayat</p>
                     </a>
                 </li>
                 <li class="nav-item border">
-                    <a href="../action/auth.php?act=logout" class="nav-link">
+                    <a href="action/auth.php?act=logout" class="nav-link">
                         <i class="bi bi-box-arrow-right" style="font-size: 2rem; color:606C7D"></i>
                         <p>Logout</p>
                     </a>

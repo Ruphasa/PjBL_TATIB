@@ -1,10 +1,10 @@
 <?php
-include('model.php');
+include('Model.php');
 
-class bukuModel extends Model
+class KategoriModel extends Model
 {
     private $db;
-    private $table = 'm_buku';
+    private $table = 'verifikasi';
 
     public function __construct()
     {
@@ -17,10 +17,11 @@ class bukuModel extends Model
     public function insertData($data)
     {
         // prepare statement untuk query insert 
-        $query = $this->db->prepare("insert into {$this->table} (kategori_id, buku_kode, buku_nama, jumlah, deskripsi, gambar) values(?,?,?,?,?,?)");
+        $query = $this->db->prepare("insert into {$this->table} (kategori_kode, 
+kategori_nama) values(?,?)");
 
         // binding parameter ke query, "s" berarti string, "ss" berarti dua string 
-        $query->bind_param('ssssss', $data['kategori_id'], $data['buku_kode'], $data['buku_nama'], $data['jumlah'], $data['deskripsi'], $data['gambar']);
+        $query->bind_param('ss', $data['kategori_kode'], $data['kategori_nama']);
 
         // eksekusi query untuk menyimpan ke database 
         $query->execute();
@@ -36,7 +37,7 @@ class bukuModel extends Model
     {
 
         // query untuk mengambil data berdasarkan id 
-        $query = $this->db->prepare("select * from {$this->table} where buku_id = ?");
+        $query = $this->db->prepare("select * from {$this->table} where kategori_id = ?");
 
         // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection 
         $query->bind_param('i', $id);
@@ -51,10 +52,11 @@ class bukuModel extends Model
     public function updateData($id, $data)
     {
         // query untuk update data 
-        $query = $this->db->prepare("update {$this->table} set kategori_id = ?, buku_kode = ?, buku_nama = ?, jumlah = ?, deskripsi = ?, gambar = ? where buku_id = ?");
+        $query = $this->db->prepare("update {$this->table} set kategori_kode = ?, 
+kategori_nama = ? where kategori_id = ?");
 
         // binding parameter ke query 
-        $query->bind_param('ssssssi', $data['kategori_id'], $data['buku_kode'], $data['buku_nama'], $data['jumlah'], $data['deskripsi'], $data['gambar'], $id);
+        $query->bind_param('ssi', $data['kategori_kode'], $data['kategori_nama'], $id);
 
         // eksekusi query 
         $query->execute();
@@ -63,7 +65,7 @@ class bukuModel extends Model
     public function deleteData($id)
     {
         // query untuk delete data 
-        $query = $this->db->prepare("delete from {$this->table} where buku_id = ?");
+        $query = $this->db->prepare("delete from {$this->table} where kategori_id = ?");
 
         // binding parameter ke query 
         $query->bind_param('i', $id);

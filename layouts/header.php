@@ -32,7 +32,7 @@
                         <a href="#" class="d-block"><?php echo $_SESSION['name']; ?></a>
                     </div>
                     <div class="image">
-                        <img src="../src/sadPP.png" class="img-circle elevation-2" alt="User Image">
+                        <img src="src/sadPP.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                 </div>
             </li>
