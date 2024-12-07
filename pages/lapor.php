@@ -54,10 +54,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="nama">aturan yang dilanggar</label>
-                                            <select class="form-control" name="" id="">
+                                            <select class="form-control" id="id_tatib" name="id_tatib" required>
                                                 <option value="0">Pilih Aturan</option>
-                                                <option value="1">Aturan 1</option>
-                                            </select>
+                                                 <?php
+                                                 $queryTatib = $db->prepare("SELECT * FROM tatib");
+                                                 $queryTatib->execute();
+                                                 $dataTatib = $queryTatib->get_result();
+                                                 while ($row = $dataTatib->fetch_assoc()) {
+                                                    echo "<option value='".$row['id_tatib']."'>".$row['aturan']."</option>";
+                                                }
+                                                ?>
+                                                </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">File input</label>
