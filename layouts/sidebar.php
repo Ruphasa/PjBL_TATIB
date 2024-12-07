@@ -35,7 +35,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
-                        <i class="bi bi-house nav-icon" style="font-size: 2rem; color:606C7D;"></i>
+                        <i class="bi bi-chat-left nav-icon" style="font-size: 2rem; color:606C7D;"></i>
                         <p>Pesan</p>
                     </a>
                 </li>
@@ -66,7 +66,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
-                        <i class="bi bi-house nav-icon" style="font-size: 2rem; color:606C7D;"></i>
+                    <i class="bi bi-mortarboard-fill" style="font-size: 2rem; color:606C7D"></i>
                         <p>Tingkat Akhir</p>
                     </a>
                 </li>
