@@ -30,7 +30,7 @@
             <div class="card-header">
                 <h3 class="card-title">Form Lapor</h3>
             </div>
-            <div class="card-body"">
+            <div class="card-body">
                 <section class=" content">
                 <div class="container-fluid">
                     <div class="row">
@@ -82,7 +82,7 @@
                                     </div>
                                     <!-- /.card-body -->
 
-                                    <div class="card-footer">
+                                    <div class="card-footer" action="action/userAction.php">
                                         <button type="submit" class="btn btn-primary">Lapor</button>
                                     </div>
                                 </form>
@@ -153,22 +153,32 @@
                     $(element).removeClass('is-invalid');
                 },
                 submitHandler: function (form) {
-                    $.ajax({
-                        url: $(form).attr('action'),
-                        method: 'post',
-                        data: $(form).serialize(),
-                        success: function (response) {
-                            var result = JSON.parse(response);
-                            if (result.status) {
-                                $('#form-data').modal('hide');
-                                tabelData.ajax.reload(); // reload data tabel 
-                            } else {
-                                alert(result.message);
-                            }
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: 'post',
+                    data: $(form).serialize(),
+                    success: function (response) {
+                        var result = JSON.parse(response);
+                        if (result.status) {
+                            // Tambahkan data ke DataTables
+                            tabelData.row.add([
+                                result.data.kategori_id,
+                                result.data.buku_kode,
+                                result.data.buku_nama,
+                                result.data.jumlah,
+                                result.data.deskripsi,
+                                result.data.gambar
+                            ]).draw(false);
+
+                            // Tutup modal form
+                            $('#form-data').modal('hide');
+                            $(form)[0].reset(); // Reset form
+                        } else {
+                            alert(result.message);
                         }
-                    });
-                }
-            });
+                    }
+                });
+            }});
         }); 
     </script>
 </body>
