@@ -1,3 +1,11 @@
+<?php
+include_once('lib/Session.php');
+if ($session->get('is_login') !== true) {
+    header('Location: login.php');
+}
+
+$session = new Session();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +63,7 @@
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM pelanggaran";
+                        $query = "SELECT * FROM pelanggaran where id_terlapor = '".$_SESSION['id']."'";
                         $result = $db->query($query);
                         if ($result->num_rows > 0) {
                             $no = 1;
