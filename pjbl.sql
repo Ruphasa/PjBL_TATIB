@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2024 at 03:24 AM
+-- Generation Time: Dec 07, 2024 at 03:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -98,6 +98,7 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`NIM`, `nama`, `password`, `kelas`) VALUES
+('2341720134', 'Ahmad Rifqi Hendriansyah', 'itsqii', 'TI2B'),
 ('2341720143', 'Rizqi Fauzan', 'rizqi2005', 'TI2B');
 
 -- --------------------------------------------------------
@@ -121,7 +122,31 @@ CREATE TABLE `pelanggaran` (
 --
 
 INSERT INTO `pelanggaran` (`id_pelanggaran`, `id_pelapor`, `id_terlapor`, `id_dpa`, `id_tatib`, `sanksi`, `lampiran`) VALUES
-(1, '2341720134', '2341720143', '198005142005022001', 3, '', '');
+(1, '2341720134', '2341720143', '198005142005022001', 3, '', ''),
+(2, '2341720143', '2341720134', '198005142005022001', 10, '', 'uploads/KTMRifqi.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pelanggaranterverif`
+--
+
+CREATE TABLE `pelanggaranterverif` (
+  `id_pelanggaran` int(10) NOT NULL,
+  `id_pelapor` varchar(20) NOT NULL,
+  `id_terlapor` varchar(20) NOT NULL,
+  `id_dpa` varchar(20) NOT NULL,
+  `id_tatib` int(11) NOT NULL,
+  `sanksi` varchar(255) NOT NULL,
+  `lampiran` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pelanggaranterverif`
+--
+
+INSERT INTO `pelanggaranterverif` (`id_pelanggaran`, `id_pelapor`, `id_terlapor`, `id_dpa`, `id_tatib`, `sanksi`, `lampiran`) VALUES
+(1, '2341720134', '2341720143', '198005142005022001', 7, '', '');
 
 -- --------------------------------------------------------
 
@@ -238,6 +263,15 @@ ALTER TABLE `pelanggaran`
   ADD KEY `id_terlapor` (`id_terlapor`);
 
 --
+-- Indexes for table `pelanggaranterverif`
+--
+ALTER TABLE `pelanggaranterverif`
+  ADD PRIMARY KEY (`id_pelanggaran`),
+  ADD KEY `id_tatib` (`id_tatib`),
+  ADD KEY `id_dpa` (`id_dpa`),
+  ADD KEY `id_terlapor` (`id_terlapor`);
+
+--
 -- Indexes for table `prodi`
 --
 ALTER TABLE `prodi`
@@ -257,6 +291,12 @@ ALTER TABLE `tatib`
 -- AUTO_INCREMENT for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
+  MODIFY `id_pelanggaran` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `pelanggaranterverif`
+--
+ALTER TABLE `pelanggaranterverif`
   MODIFY `id_pelanggaran` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
