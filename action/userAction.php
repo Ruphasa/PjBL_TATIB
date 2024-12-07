@@ -6,6 +6,7 @@ include_once('../lib/Connection.php');
 
 $session = new Session();
 $model = new PelanggaranModel();
+$id=$session->get('id');
 
 if ($session->get('is_login') !== true) {
     header('Location: login.php');
@@ -39,8 +40,6 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
 }
 
 if ($act == 'get') {
-    $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
-
     $pelanggaran = new PelanggaranModel();
     $data = $pelanggaran->getDataById($id);
     echo json_encode($data);
@@ -105,14 +104,13 @@ if ($act == 'lapor') {
     }
 
     // Get the form data
-    $id_pelapor = $session->get('id');
     $id_terlapor = $_POST['NIM'];
     $id_dpa = $row['id_dpa'];
     $id_tatib = $_POST['id_tatib'];
     $lampiran = $_FILES['lampiran']; 
 
     // Debugging: Print the received data
-    error_log("ID Pelapor: " . $id_pelapor);
+    error_log("ID Pelapor: " . $id);
     error_log("ID Terlapor: " . $id_terlapor);
     error_log("ID DPA: " . $id_dpa);
     error_log("ID Tatib: " . $id_tatib);
@@ -125,10 +123,13 @@ if ($act == 'lapor') {
     if (move_uploaded_file($lampiran["tmp_name"], $target_file)) {
         // Insert data into the database
         $query = $db->prepare('INSERT INTO pelanggaran (id_pelapor, id_terlapor, id_dpa, id_tatib, lampiran) VALUES (?, ?, ?, ?, ?)');
-        $query->bind_param('sssss', $id_pelapor, $id_terlapor, $id_dpa, $id_tatib, $target_file);
+        $query->bind_param('sssss', $id, $id_terlapor, $id_dpa, $id_tatib, $target_file);
 
         if ($query->execute()) {
             echo json_encode(['status' => true, 'message' => 'Data berhasil disimpan!']);
+
+            // Redirect to the home page or any other desired page
+            header('Location: ../index.php');
         } else {
             error_log('Error executing query: ' . $query->error);
             echo json_encode(['status' => false, 'message' => 'Gagal menyimpan data.']);

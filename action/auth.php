@@ -32,6 +32,7 @@ if ($act == 'login') {
     // jika password sesuai
     if ($dataMahasiswa &&$dataMahasiswa['password'] == $password) {
         $session->set('is_login', true);
+        $session->set('id', $id);
         $session->set('name', $dataMahasiswa['nama']);
         $session->set('role', 'user');
         $session->commit();
@@ -39,6 +40,7 @@ if ($act == 'login') {
         header('Location: ../index.php');
     } else if ($dataAdmin && $dataAdmin['password'] == $password) {
         $session->set('is_login', true);
+        $session->set('id', $id);
         $session->set('name', $dataAdmin['nama']);
         $session->set('role', 'admin');
         $session->commit();
@@ -46,6 +48,7 @@ if ($act == 'login') {
         header('Location: ../index.php');
     } else if ($dataDosen && $dataDosen['password'] == $password) {
         $session->set('is_login', true);
+        $session->set('id', $id);
         $session->set('name', $dataDosen['nama']);
         $session->set('role', 'user');
         $session->commit();

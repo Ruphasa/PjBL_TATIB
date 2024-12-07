@@ -51,6 +51,7 @@
                                     <th>ID Tatib</th>
                                     <th>Sanksi</th>
                                     <th>Lampiran</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,6 +70,7 @@
                                         echo "<td>{$row['id_tatib']}</td>";
                                         echo "<td>{$row['sanksi']}</td>";
                                         echo "<td>{$row['lampiran']}</td>";
+                                        echo "<td><button type='button' class='btn btn-md btn-primary'>Verifikasi</button></td>";
                                         echo "</tr>";
                                         $no++;
                                     }

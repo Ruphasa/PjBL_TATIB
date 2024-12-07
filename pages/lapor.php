@@ -201,45 +201,6 @@ if ($session->get('is_login') !== true) {
                             extension: "File harus berupa format jpg, jpeg, png, atau pdf."
                         }
                     },
-                    errorElement: 'span',
-                    errorPlacement: function (error, element) {
-                        error.addClass('invalid-feedback');
-                        element.closest('.form-group').append(error);
-                    },
-                    highlight: function (element) {
-                        $(element).addClass('is-invalid');
-                    },
-                    unhighlight: function (element) {
-                        $(element).removeClass('is-invalid');
-                    },
-                    submitHandler: function (form) {
-                        // Kirim data dengan AJAX
-                        $.ajax({
-                            url: $(form).attr('action'),
-                            method: 'POST',
-                            data: new FormData(form),
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                try {
-                                    const result = JSON.parse(response);
-                                    if (result.status) {
-                                        alert('Data berhasil disimpan!');
-                                        $(form)[0].reset(); // Reset form
-                                        window.location.href = 'pelanggaranmu.php'; // Redirect ke halaman pelanggaranmu.php
-                                    } else {
-                                        alert('Gagal menyimpan data: ' + result.message);
-                                    }
-                                } catch (e) {
-                                    alert('Terjadi kesalahan saat memproses data.');
-                                }
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                console.log('Error: ' + textStatus + ' ' + errorThrown);
-                                alert('Terjadi kesalahan saat mengirim data.');
-                            }
-                        });
-                    }
                 });
 
                 // Custom file input label

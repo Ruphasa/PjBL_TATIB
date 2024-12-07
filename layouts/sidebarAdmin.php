@@ -42,7 +42,7 @@
                 <li class="nav-item">
                     <a href="index.php?page=verifikasi" class="nav-link">
                         <i class="bi bi-exclamation-circle" style="font-size: 2rem; color:606C7D"></i>
-                        <p>Verifikasi</p>
+                        <p>Menunggu Verifikasi</p>
                     </a>
                 </li>
                 <li class="nav-item">

@@ -68,7 +68,14 @@
                                 echo "<td>{$row['id_dpa']}</td>";
                                 echo "<td>{$row['id_tatib']}</td>";
                                 echo "<td>{$row['sanksi']}</td>";
-                                echo "<td>{$row['lampiran']}</td>";
+                                echo "<td>";
+                                if (empty($row['lampiran'])) {
+                                    # code...
+                                    echo "Tidak ada lampiran";
+                                }else{
+                                    echo "<img src=".$row['lampiran']." style='height: 100px;'>";
+                                }
+                                echo "</td>";
                                 echo "</tr>";
                                 $no++;
                             }

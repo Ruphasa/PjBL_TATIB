@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM pelanggaran";
+                            $query = "SELECT * FROM pelanggaranterverif";
                             $result = $db->query($query);
                             if ($result->num_rows > 0) {
                                 $no = 1;
@@ -84,10 +84,6 @@
 </section>
 
 <script>
-function tambahData() {
-    alert('Form tambah data dapat diimplementasikan di sini.');
-}
-
 $(document).ready(function () {
     $('#table-data').DataTable();
 });

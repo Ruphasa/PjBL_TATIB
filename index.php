@@ -53,7 +53,7 @@ if ($session->get('is_login') !== true) {
   </style>
 </head>
 
-<body style="height:100%">
+<body style="height:100%" width="100%">
   <!-- Site wrapper -->
   <div class="wrapper" style="height:100%">
     <!-- Navbar -->
