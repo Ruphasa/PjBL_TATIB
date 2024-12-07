@@ -71,4 +71,19 @@ class PelanggaranModel extends Model
         // Eksekusi query
         $query->execute();
     }
+
+    public function getDataByNim($nim)
+    {
+        // Query untuk mengambil data berdasarkan NIM
+        $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE id_pelapor = ?");
+
+        // Binding parameter ke query
+        $query->bind_param('s', $nim);
+
+        // Eksekusi query
+        $query->execute();
+
+        // Ambil hasil query
+        return $query->get_result()->fetch_assoc();
+    }
 }

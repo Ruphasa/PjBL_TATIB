@@ -1,5 +1,5 @@
 <?php
-include('../lib/Session.php');
+include_once('../lib/Session.php');
 include('../lib/Connection.php');
 
 $session = new Session();

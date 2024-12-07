@@ -28,59 +28,67 @@
             ?></h3>
         </div>
         <div class="card-body">
-        </div>
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Card Wrapper -->
+            <!-- /.Card Header -->
+            <section class="content">
                 <div class="card">
-                    <!-- Card Header -->
                     <div class="card-header">
-                        <h3 class="card-title">Data Pelanggar Prodi TI</h3>
+                        <h3 class="card-title">Daftar Pelanggaran</h3>
+                        <!-- <div class="card-tools">
+                        <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
+                            Tambah
+                        </button>
+                    </div> -->
                     </div>
-                    <!-- /.Card Header -->
-
-                    <!-- Card Body -->
                     <div class="card-body">
-                        <!-- Tabel -->
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-sm table-bordered table-striped" id="table-data">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tanggal</th>
-                                    <th>Pelapor</th>
-                                    <th>Pelaku</th>
-                                    <th>Pelanggaran</th>
-                                    <th>Level</th>
+                                    <th>ID Pelanggaran</th>
+                                    <th>ID Pelapor</th>
+                                    <th>ID Terlapor</th>
+                                    <th>ID DPA</th>
+                                    <th>ID Tatib</th>
+                                    <th>Sanksi</th>
+                                    <th>Lampiran</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                // Contoh data dummy (ganti dengan query database Anda)
-                                $data = [
-                                    ['tanggal' => '2024-01-01', 'pelapor' => 'John', 'pelaku' => 'Doe', 'pelanggaran' => 'Tidak Memakai Masker', 'level' => 'Sedang'],
-                                    ['tanggal' => '2024-01-02', 'pelapor' => 'Jane', 'pelaku' => 'Smith', 'pelanggaran' => 'Merokok di Area Larangan', 'level' => 'Sedang'],
-                                ];
-
-                                foreach ($data as $index => $row) {
-                                    echo "<tr>
-                                <td>" . ($index + 1) . "</td>
-                                <td>{$row['tanggal']}</td>
-                                <td>{$row['pelapor']}</td>
-                                <td>{$row['pelaku']}</td>
-                                <td>{$row['pelanggaran']}</td>
-                                <td>{$row['level']}</td>
-                            </tr>";
+                                $query = "SELECT * FROM pelanggaran";
+                                $result = $db->query($query);
+                                if ($result->num_rows > 0) {
+                                    $no = 1;
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>{$no}</td>";
+                                        echo "<td>{$row['id_pelanggaran']}</td>";
+                                        echo "<td>{$row['id_pelapor']}</td>";
+                                        echo "<td>{$row['id_terlapor']}</td>";
+                                        echo "<td>{$row['id_dpa']}</td>";
+                                        echo "<td>{$row['id_tatib']}</td>";
+                                        echo "<td>{$row['sanksi']}</td>";
+                                        echo "<td>{$row['lampiran']}</td>";
+                                        echo "</tr>";
+                                        $no++;
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='7'>Tidak ada data.</td></tr>";
                                 }
                                 ?>
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.Card Body -->
                 </div>
-                <!-- /.Card Wrapper -->
-            </div>
-        </section>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
+        </div>
 </section>
+
+<script>
+    function tambahData() {
+        alert('Form tambah data dapat diimplementasikan di sini.');
+    }
+
+    $(document).ready(function () {
+        $('#table-data').DataTable();
+    });
+</script>

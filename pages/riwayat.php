@@ -28,149 +28,77 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Daftar Kategori Buku</h3>
-                <div class="card-tools">
+                <h3 class="card-title"> <?php
+                if (isset($_SESSION['name'])) {
+                    # code...
+                    echo "Selamat Datang <b>" . $_SESSION['name'];
+                }
+                ?></h3>
+            </div>
+            <div class="card-body">
+                <!-- /.Card Header -->
+                <section class="content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Daftar Pelanggaran</h3>
+                            <!-- <div class="card-tools">
                     <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                         Tambah
                     </button>
-                </div>
+                </div> -->
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm table-bordered table-striped" id="table-data">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>ID Pelanggaran</th>
+                                        <th>ID Pelapor</th>
+                                        <th>ID Terlapor</th>
+                                        <th>ID DPA</th>
+                                        <th>ID Tatib</th>
+                                        <th>Sanksi</th>
+                                        <th>Lampiran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $query = "SELECT * FROM pelanggaran";
+                                    $result = $db->query($query);
+                                    if ($result->num_rows > 0) {
+                                        $no = 1;
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                            echo "<td>{$no}</td>";
+                                            echo "<td>{$row['id_pelanggaran']}</td>";
+                                            echo "<td>{$row['id_pelapor']}</td>";
+                                            echo "<td>{$row['id_terlapor']}</td>";
+                                            echo "<td>{$row['id_dpa']}</td>";
+                                            echo "<td>{$row['id_tatib']}</td>";
+                                            echo "<td>{$row['sanksi']}</td>";
+                                            echo "<td>{$row['lampiran']}</td>";
+                                            echo "</tr>";
+                                            $no++;
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='7'>Tidak ada data.</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </div>
-            <div class="card-body">
-                <table class="table table-sm table-bordered table-striped" id="table-data">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Kode Kategori</th>
-                            <th>Nama Kategori</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </section>
-    <div class="modal fade" id="form-data" style="display: none;" aria-hidden="true">
-        <form action="action/kategoriAction.php?act=save" method="post" id="form-tambah">
-            <!--    Ukuran Modal  
-                modal-sm : Modal ukuran kecil 
-                modal-md : Modal ukuran sedang 
-                modal-lg : Modal ukuran besar 
-                modal-xl : Modal ukuran sangat besar 
-            penerapan setelah class modal-dialog seperti di bawah 
-    -->
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Tambah Kategori</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Kode Kategori</label>
-                            <input type="text" class="form-control" name="kategori_kode" id="kategori_kode">
-                        </div>
-                        <div class="form-group">
-                            <label>Nama Kategori</label>
-                            <input type="text" class="form-control" name="kategori_nama" id="kategori_nama">
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
 
     <script>
         function tambahData() {
-            $('#form-data').modal('show');
-            $('#form-tambah').attr('action', 'action/kategoriAction.php?act=save');
-            $('#kategori_kode').val('');
-            $('#kategori_nama').val('');
+            alert('Form tambah data dapat diimplementasikan di sini.');
         }
 
-        function editData(id) {
-            $.ajax({
-                url: 'action/kategoriAction.php?act=get&id=' + id,
-                method: 'post',
-                success: function (response) {
-                    var data = JSON.parse(response);
-                    $('#form-data').modal('show');
-                    $('#form-tambah').attr('action',
-                        'action/kategoriAction.php?act=update&id=' + id);
-                    $('#kategori_kode').val(data.kategori_kode);
-                    $('#kategori_nama').val(data.kategori_nama);
-
-                }
-            });
-        }
-
-        function deleteData(id) {
-            if (confirm('Apakah anda yakin?')) {
-                $.ajax({
-                    url: 'action/kategoriAction.php?act=delete&id=' + id,
-                    method: 'post',
-                    success: function (response) {
-                        var result = JSON.parse(response);
-                        if (result.status) {
-                            tabelData.ajax.reload();
-                        } else {
-                            alert(result.message);
-                        }
-                    }
-                });
-            }
-        }
-
-        var tabelData;
         $(document).ready(function () {
-            tabelData = $('#table-data').DataTable({
-                ajax: 'action/kategoriAction.php?act=load',
-            });
-
-        $('#form-tambah').validate({
-            rules: {
-                kategori_kode: {
-                    required: true,
-                    minlength: 3
-                },
-                kategori_nama: {
-                    required: true,
-                    minlength: 5
-                }
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            },
-            submitHandler: function (form) {
-                $.ajax({
-                    url: $(form).attr('action'),
-                    method: 'post',
-                    data: $(form).serialize(),
-                    success: function (response) {
-                        var result = JSON.parse(response);
-                        if (result.status) {
-                            $('#form-data').modal('hide');
-                            tabelData.ajax.reload(); // reload data tabel 
-                        } else {
-                            alert(result.message);
-                        }
-                    }
-                });
-            }
+            $('#table-data').DataTable();
         });
-        }); 
     </script>
 </body>
 

@@ -111,9 +111,9 @@ if ($session->get('is_login') !== true) {
             }
           }
           ?>
-          <?php include('layouts/footer.php'); ?>
         </div>
       </section>
+      <?php include('layouts/footer.php'); ?>
     </div><!-- /.content-wrapper -->
   </div><!-- ./wrapper -->
 
