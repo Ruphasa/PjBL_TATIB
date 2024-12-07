@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Des 2024 pada 02.16
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: Dec 07, 2024 at 03:24 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id_admin`, `nama`, `password`) VALUES
@@ -44,7 +44,7 @@ INSERT INTO `admin` (`id_admin`, `nama`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `dosen`
+-- Table structure for table `dosen`
 --
 
 CREATE TABLE `dosen` (
@@ -55,16 +55,16 @@ CREATE TABLE `dosen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `dosen`
+-- Dumping data for table `dosen`
 --
 
 INSERT INTO `dosen` (`NIP`, `nama`, `password`, `kelas`) VALUES
-('12345678', 'Dr. Sudirman', 'dosen1', '2B');
+('198005142005022001', 'Triana Fatmawati', '12345', 'TI2B');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kelas`
+-- Table structure for table `kelas`
 --
 
 CREATE TABLE `kelas` (
@@ -73,17 +73,17 @@ CREATE TABLE `kelas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `kelas`
+-- Dumping data for table `kelas`
 --
 
 INSERT INTO `kelas` (`id_kelas`, `id_prodi`) VALUES
-('3A', 'SIB01'),
-('2B', 'TI01');
+('SIB3A', 'SIB01'),
+('TI2B', 'TI01');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `mahasiswa`
+-- Table structure for table `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
@@ -94,21 +94,20 @@ CREATE TABLE `mahasiswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `mahasiswa`
+-- Dumping data for table `mahasiswa`
 --
 
 INSERT INTO `mahasiswa` (`NIM`, `nama`, `password`, `kelas`) VALUES
-('2341720202', 'Ericha Rizki Wardani', 'ericha123', '2B'),
-('2341720224', 'Natasha Wilona', 'natasha224', '3A');
+('2341720143', 'Rizqi Fauzan', 'rizqi2005', 'TI2B');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pelanggaran`
+-- Table structure for table `pelanggaran`
 --
 
 CREATE TABLE `pelanggaran` (
-  `id_pelanggaran` varchar(10) NOT NULL,
+  `id_pelanggaran` int(10) NOT NULL,
   `id_pelapor` varchar(20) NOT NULL,
   `id_terlapor` varchar(20) NOT NULL,
   `id_dpa` varchar(20) NOT NULL,
@@ -118,36 +117,35 @@ CREATE TABLE `pelanggaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `pelanggaran`
+-- Dumping data for table `pelanggaran`
 --
 
 INSERT INTO `pelanggaran` (`id_pelanggaran`, `id_pelapor`, `id_terlapor`, `id_dpa`, `id_tatib`, `sanksi`, `lampiran`) VALUES
-('P001', 'PL001', '2341720202', '12345678', 1, 'Kompen 1 minggu', 'Laporan.pdf');
+(1, '2341720134', '2341720143', '198005142005022001', 3, '', '');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `prodi`
+-- Table structure for table `prodi`
 --
 
 CREATE TABLE `prodi` (
   `id_prodi` varchar(5) NOT NULL,
-  `id_jurusan` int(10) NOT NULL,
   `nama_prodi` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `prodi`
+-- Dumping data for table `prodi`
 --
 
-INSERT INTO `prodi` (`id_prodi`, `id_jurusan`, `nama_prodi`) VALUES
-('SIB01', 23417, 'SIB'),
-('TI01', 41720, 'Teknik Informatika');
+INSERT INTO `prodi` (`id_prodi`, `nama_prodi`) VALUES
+('SIB01', 'SIB'),
+('TI01', 'Teknik Informatika');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tatib`
+-- Table structure for table `tatib`
 --
 
 CREATE TABLE `tatib` (
@@ -157,7 +155,7 @@ CREATE TABLE `tatib` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `tatib`
+-- Dumping data for table `tatib`
 --
 
 INSERT INTO `tatib` (`id_tatib`, `aturan`, `level`) VALUES
@@ -204,34 +202,34 @@ INSERT INTO `tatib` (`id_tatib`, `aturan`, `level`) VALUES
 --
 
 --
--- Indeks untuk tabel `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
 
 --
--- Indeks untuk tabel `dosen`
+-- Indexes for table `dosen`
 --
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`NIP`),
   ADD KEY `kelas` (`kelas`);
 
 --
--- Indeks untuk tabel `kelas`
+-- Indexes for table `kelas`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id_kelas`),
   ADD KEY `id_prodi` (`id_prodi`);
 
 --
--- Indeks untuk tabel `mahasiswa`
+-- Indexes for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`NIM`),
   ADD KEY `kelas` (`kelas`);
 
 --
--- Indeks untuk tabel `pelanggaran`
+-- Indexes for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
   ADD PRIMARY KEY (`id_pelanggaran`),
@@ -240,52 +238,57 @@ ALTER TABLE `pelanggaran`
   ADD KEY `id_terlapor` (`id_terlapor`);
 
 --
--- Indeks untuk tabel `prodi`
+-- Indexes for table `prodi`
 --
 ALTER TABLE `prodi`
-  ADD PRIMARY KEY (`id_prodi`),
-  ADD KEY `id_jurusan` (`id_jurusan`);
+  ADD PRIMARY KEY (`id_prodi`);
 
 --
--- Indeks untuk tabel `tatib`
+-- Indexes for table `tatib`
 --
 ALTER TABLE `tatib`
   ADD PRIMARY KEY (`id_tatib`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tatib`
+-- AUTO_INCREMENT for table `pelanggaran`
+--
+ALTER TABLE `pelanggaran`
+  MODIFY `id_pelanggaran` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tatib`
 --
 ALTER TABLE `tatib`
   MODIFY `id_tatib` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=322;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `dosen`
+-- Constraints for table `dosen`
 --
 ALTER TABLE `dosen`
   ADD CONSTRAINT `dosen_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `kelas` (`id_kelas`);
 
 --
--- Ketidakleluasaan untuk tabel `kelas`
+-- Constraints for table `kelas`
 --
 ALTER TABLE `kelas`
   ADD CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_prodi`) REFERENCES `prodi` (`id_prodi`);
 
 --
--- Ketidakleluasaan untuk tabel `mahasiswa`
+-- Constraints for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `kelas` (`id_kelas`);
 
 --
--- Ketidakleluasaan untuk tabel `pelanggaran`
+-- Constraints for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
   ADD CONSTRAINT `pelanggaran_ibfk_1` FOREIGN KEY (`id_dpa`) REFERENCES `dosen` (`NIP`),
