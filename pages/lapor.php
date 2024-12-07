@@ -53,7 +53,7 @@
                                                 placeholder="Enter Full Name">
                                         </div>
                                         <div class="form-group">
-                                            <label for="nama">aturan yang dilanggar</label>
+                                            <label for="nama">Aturan yang dilanggar</label>
                                             <select class="form-control" id="id_tatib" name="id_tatib" required>
                                                 <option value="0">Pilih Aturan</option>
                                                  <?php
