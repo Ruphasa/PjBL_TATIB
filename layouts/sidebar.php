@@ -41,19 +41,19 @@
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
-                        <i class="bi bi-house nav-icon" style="font-size: 2rem; color:606C7D;"></i>
+                        <i class="bi bi-people" style="font-size: 2rem; color:606C7D"></i>
                         <p>Umum</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
-                        <i class="bi bi-house nav-icon" style="font-size: 2rem; color:606C7D;"></i>
+                    <i class="bi bi-book" style="font-size: 2rem; color:606C7D;"></i>
                         <p>Akademik</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
-                        <i class="bi bi-house nav-icon" style="font-size: 2rem; color:606C7D;"></i>
+                    <i class="bi bi-cash-stack" style="font-size: 2rem; color:606C7D;"></i>
                         <p>UKT</p>
                     </a>
                 </li>
