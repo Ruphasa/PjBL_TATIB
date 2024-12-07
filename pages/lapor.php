@@ -32,154 +32,141 @@
             </div>
             <div class="card-body">
                 <section class=" content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- left column -->
-                        <div class="col">
-                            <!-- general form elements -->
-                            <div class="card card-primary">
-                                <!-- /.card-header -->
-                                <!-- form start -->
-                                <form>
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="NIM">Nomor Induk</label>
-                                            <input type="text" class="form-control" id="NIM"
-                                                placeholder="Enter NIM">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama"
-                                                placeholder="Enter Full Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="nama">Aturan yang dilanggar</label>
-                                            <select class="form-control" id="id_tatib" name="id_tatib" required>
-                                                <option value="0">Pilih Aturan</option>
-                                                 <?php
-                                                 $queryTatib = $db->prepare("SELECT * FROM tatib");
-                                                 $queryTatib->execute();
-                                                 $dataTatib = $queryTatib->get_result();
-                                                 while ($row = $dataTatib->fetch_assoc()) {
-                                                    echo "<option value='".$row['id_tatib']."'>".$row['aturan']."</option>";
-                                                }
-                                                ?>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- left column -->
+                            <div class="col">
+                                <!-- general form elements -->
+                                <div class="card card-primary">
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <form id="form-lapor" action="action/userAction.php" method="post"
+                                        enctype="multipart/form-data">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="NIM">Nomor Induk</label>
+                                                <input type="text" class="form-control" id="NIM" name="NIM"
+                                                    placeholder="Enter NIM" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="nama">Nama</label>
+                                                <input type="text" class="form-control" id="nama" name="nama"
+                                                    placeholder="Enter Full Name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="id_tatib">Aturan yang dilanggar</label>
+                                                <select class="form-control" id="id_tatib" name="id_tatib" required>
+                                                    <option value="">Pilih Aturan</option>
+                                                    <?php
+                                                    $queryTatib = $db->prepare("SELECT * FROM tatib");
+                                                    $queryTatib->execute();
+                                                    $dataTatib = $queryTatib->get_result();
+                                                    while ($row = $dataTatib->fetch_assoc()) {
+                                                        echo "<option value='" . $row['id_tatib'] . "'>" . $row['aturan'] . "</option>";
+                                                    }
+                                                    ?>
                                                 </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose
-                                                        file</label>
-                                                </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Upload</span>
-                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lampiran">Lampiran</label>
+                                                <input type="file" class="form-control" id="lampiran" name="lampiran">
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Lapor</button>
+                                        </div>
+                                    </form>
 
-                                    <div class="card-footer" action="action/userAction.php">
-                                        <button type="submit" class="btn btn-primary">Lapor</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                </div>
-    </section>
-    </div>
-    </div>
+                </section>
+            </div>
+        </div>
     </section>
 
     <script>
-        function tambahData() {
-            $('#form-data').modal('show');
-            $('#form-tambah').attr('action', 'action/bukuAction.php?act=save');
-            $('#kategori_id').val('');
-            $('#buku_kode').val('');
-            $('#buku_nama').val('');
-            $('#jumlah').val('');
-            $('#deskripsi').val('');
-            $('#gambar').val('');
-        }
-
-        var tabelData;
         $(document).ready(function () {
-            tabelData = $('#table-data').DataTable({
-                ajax: 'action/bukuAction.php?act=load',
-            });
-
-            $('#form-tambah').validate({
+            $('#form-lapor').validate({
                 rules: {
-                    kategori_id: {
+                    NIM: {
                         required: true,
-                        minlength: 1
+                        digits: true,
+                        minlength: 8,
+                        maxlength: 15
                     },
-                    buku_kode: {
+                    nama: {
                         required: true,
-                        minlength: 1
+                        minlength: 3
                     },
-                    buku_nama: {
+                    id_tatib: {
                         required: true,
-                        minlength: 1
+                        min: 1
                     },
-                    jumlah: {
+                    lampiran: {
                         required: true,
-                        minlength: 1
+                        extension: "jpg|jpeg|png|pdf"
+                    }
+                },
+                messages: {
+                    NIM: {
+                        required: "Nomor Induk wajib diisi.",
+                        digits: "Nomor Induk harus berupa angka.",
+                        minlength: "Nomor Induk minimal 8 karakter.",
+                        maxlength: "Nomor Induk maksimal 15 karakter."
                     },
-                    deskripsi: {
-                        required: true,
-                        minlength: 10
+                    nama: {
+                        required: "Nama wajib diisi.",
+                        minlength: "Nama minimal 3 karakter."
                     },
-                    gambar: {
-                        required: true,
-                        minlength: 10
+                    id_tatib: {
+                        required: "Silakan pilih aturan yang dilanggar.",
+                        min: "Silakan pilih aturan yang valid."
+                    },
+                    lampiran: {
+                        required: "Lampiran wajib diunggah.",
+                        extension: "File harus berupa format jpg, jpeg, png, atau pdf."
                     }
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
                     error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
+                    element.closest('.mb-3').append(error);
                 },
-                highlight: function (element, errorClass, validClass) {
+                highlight: function (element) {
                     $(element).addClass('is-invalid');
                 },
-                unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function (element) {
                     $(element).removeClass('is-invalid');
                 },
                 submitHandler: function (form) {
-                $.ajax({
-                    url: $(form).attr('action'),
-                    method: 'post',
-                    data: $(form).serialize(),
-                    success: function (response) {
-                        var result = JSON.parse(response);
-                        if (result.status) {
-                            // Tambahkan data ke DataTables
-                            tabelData.row.add([
-                                result.data.kategori_id,
-                                result.data.buku_kode,
-                                result.data.buku_nama,
-                                result.data.jumlah,
-                                result.data.deskripsi,
-                                result.data.gambar
-                            ]).draw(false);
+                    // Kirim data dengan AJAX
+                    $.ajax({
+                        url: $(form).attr('action'),
+                        method: 'POST',
+                        data: new FormData(form),
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            const result = JSON.parse(response);
+                            if (result.status) {
+                                alert('Data berhasil disimpan!');
+                                $(form)[0].reset(); // Reset form
+                                window.location.href = 'pelanggaranmu.php'; // Redirect ke halaman pelanggaranmu.php
+                            } else {
+                                alert('Gagal menyimpan data: ' + result.message);
+                            }
+                        },
 
-                            // Tutup modal form
-                            $('#form-data').modal('hide');
-                            $(form)[0].reset(); // Reset form
-                        } else {
-                            alert(result.message);
+                        error: function () {
+                            alert('Terjadi kesalahan saat mengirim data.');
                         }
-                    }
-                });
-            }});
-        }); 
+                    });
+                }
+            });
+        });
     </script>
 </body>
 
