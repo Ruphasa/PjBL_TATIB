@@ -59,11 +59,12 @@
                                 <th>ID Tatib</th>
                                 <th>Sanksi</th>
                                 <th>Lampiran</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM pelanggaran";
+                            $query = "SELECT * FROM pelanggaranterselesai";
                             $result = $db->query($query);
                             if ($result->num_rows > 0) {
                                 $no = 1;
@@ -77,6 +78,7 @@
                                     echo "<td>{$row['id_tatib']}</td>";
                                     echo "<td>{$row['sanksi']}</td>";
                                     echo "<td>{$row['lampiran']}</td>";
+                                    echo "<td><button type='button' class='btn btn-md btn-primary'>Selesai</button> <button type='button' class='btn btn-md btn-danger'>Belum</button></td>";
                                     echo "</tr>";
                                     $no++;
                                 }

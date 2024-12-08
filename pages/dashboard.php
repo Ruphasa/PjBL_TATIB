@@ -50,7 +50,6 @@
                                 <th>ID DPA</th>
                                 <th>ID Tatib</th>
                                 <th>Sanksi</th>
-                                <th>Lampiran</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,7 +67,6 @@
                                     echo "<td>{$row['id_dpa']}</td>";
                                     echo "<td>{$row['id_tatib']}</td>";
                                     echo "<td>{$row['sanksi']}</td>";
-                                    echo "<td>{$row['lampiran']}</td>";
                                     echo "</tr>";
                                     $no++;
                                 }

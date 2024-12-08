@@ -36,12 +36,26 @@
                 <li class="nav-item">
                     <a href="index.php?page=pending" class="nav-link">
                         <i class="bi bi-envelope" style="font-size: 2rem; color:606C7D"></i>
+                        <span class="badge badge-danger navbar-badge">
+                            <?php
+                            $query = "SELECT * FROM pelanggaran";
+                            $result = $db->query($query);
+                            echo $result->num_rows;
+                            ?>
+                        </span>
                         <p>Pending</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="index.php?page=verifikasi" class="nav-link">
                         <i class="bi bi-exclamation-circle" style="font-size: 2rem; color:606C7D"></i>
+                        <span class="badge badge-danger navbar-badge">
+                            <?php
+                            $query = "SELECT * FROM pelanggaranterselesai";
+                            $result = $db->query($query);
+                            echo $result->num_rows;
+                            ?>
+                        </span>
                         <p>Menunggu Verifikasi</p>
                     </a>
                 </li>

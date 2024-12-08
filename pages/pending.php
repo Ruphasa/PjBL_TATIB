@@ -69,8 +69,13 @@
                                         echo "<td>{$row['id_dpa']}</td>";
                                         echo "<td>{$row['id_tatib']}</td>";
                                         echo "<td>{$row['sanksi']}</td>";
-                                        echo "<td>{$row['lampiran']}</td>";
-                                        echo "<td><button type='button' class='btn btn-md btn-primary'>Verifikasi</button></td>";
+                                        if (empty($row['lampiran'])) {
+                                            # code...
+                                            echo "<td>Tidak ada lampiran</td>";
+                                        } else {
+                                            echo "<td><img src=" . $row['lampiran'] . " style='height: 100px;'></td>";
+                                        }
+                                        echo "<td><button type='button' class='btn btn-md btn-primary'>Verifikasi</button> <button type='button' class='btn btn-md btn-danger'>Tolak</button></td>";
                                         echo "</tr>";
                                         $no++;
                                     }
