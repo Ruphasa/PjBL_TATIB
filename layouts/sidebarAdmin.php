@@ -38,7 +38,7 @@
                         <i class="bi bi-envelope" style="font-size: 2rem; color:606C7D"></i>
                         <span class="badge badge-danger navbar-badge">
                             <?php
-                            $query = "SELECT * FROM pelanggaran";
+                            $query = "SELECT * FROM pelanggaran where status = 'pending'";
                             $result = $db->query($query);
                             echo $result->num_rows;
                             ?>
@@ -51,7 +51,7 @@
                         <i class="bi bi-exclamation-circle" style="font-size: 2rem; color:606C7D"></i>
                         <span class="badge badge-danger navbar-badge">
                             <?php
-                            $query = "SELECT * FROM pelanggaranterselesai";
+                            $query = "SELECT * FROM pelanggaran where status = 'hold'";
                             $result = $db->query($query);
                             echo $result->num_rows;
                             ?>

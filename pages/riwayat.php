@@ -62,7 +62,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = "SELECT * FROM historypelanggaran";
+                                    $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where status = 'done'";
                                     $result = $db->query($query);
                                     if ($result->num_rows > 0) {
                                         $no = 1;
@@ -74,7 +74,7 @@
                                             echo "<td>{$row['id_terlapor']}</td>";
                                             echo "<td>{$row['id_dpa']}</td>";
                                             echo "<td>{$row['id_tatib']}</td>";
-                                            echo "<td>{$row['sanksi']}</td>";
+                                            echo "<td>{$row['Sanksi']}</td>";
                                             echo "</tr>";
                                             $no++;
                                         }

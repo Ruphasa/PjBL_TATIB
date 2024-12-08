@@ -62,7 +62,7 @@ $session = new Session();
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM pelanggaran where id_terlapor = '".$_SESSION['id']."'";
+                        $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where id_terlapor = '".$_SESSION['id']."' and status = 'ongoing'";
                         $result = $db->query($query);
                         if ($result->num_rows > 0) {
                             $no = 1;
@@ -74,7 +74,7 @@ $session = new Session();
                                 echo "<td>{$row['id_terlapor']}</td>";
                                 echo "<td>{$row['id_dpa']}</td>";
                                 echo "<td>{$row['id_tatib']}</td>";
-                                echo "<td>{$row['sanksi']}</td>";
+                                echo "<td>{$row['Sanksi']}</td>";
                                 echo "</tr>";
                                 $no++;
                             }

@@ -107,7 +107,8 @@ if ($act == 'lapor') {
     $id_terlapor = $_POST['NIM'];
     $id_dpa = $row['id_dpa'];
     $id_tatib = $_POST['id_tatib'];
-    $lampiran = $_FILES['lampiran']; 
+    $lampiran = $_FILES['lampiran'];
+    $status = 'pending';
 
     // Debugging: Print the received data
     error_log("ID Pelapor: " . $id);
@@ -122,8 +123,8 @@ if ($act == 'lapor') {
 
     if (move_uploaded_file($lampiran["tmp_name"], $target_file)) {
         // Insert data into the database
-        $query = $db->prepare('INSERT INTO pelanggaran (id_pelapor, id_terlapor, id_dpa, id_tatib, lampiran) VALUES (?, ?, ?, ?, ?)');
-        $query->bind_param('sssss', $id, $id_terlapor, $id_dpa, $id_tatib, $target_file);
+        $query = $db->prepare('INSERT INTO pelanggaran (id_pelapor, id_terlapor, id_dpa, id_tatib, lampiran, status) VALUES (?, ?, ?, ?, ?, ?)');
+        $query->bind_param('ssssss', $id, $id_terlapor, $id_dpa, $id_tatib, $target_file, $status);
 
         if ($query->execute()) {
             echo json_encode(['status' => true, 'message' => 'Data berhasil disimpan!']);
