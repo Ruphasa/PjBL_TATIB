@@ -160,7 +160,13 @@ if ($session->get('is_login') !== true) {
                                             echo "<td>Mengunggu</td>";
                                         } else if ($row['status'] == 'rejected') {
                                             echo "<td>
-                                            <button type='button' class='btn btn-md btn-primary' data-id='{$row['id_pelanggaran']}' data-id_dpa='{$row['id_dpa']}' data-id_pelapor='{$row['id_pelapor']}' data-id_tatib='{$row['id_tatib']}' data-toggle='modal' data-target='#resendModal' onclick='populateResendForm(this)'>Kirim Ulang</button> 
+                                           <button type='button' class='btn btn-md btn-primary' data-id='{$row['id_pelanggaran']}' 
+                                            data-id_pelapor='{$row['id_pelapor']}' data-id_terlapor='{$row['id_terlapor']}' 
+                                            data-id_dpa='{$row['id_dpa']}' data-id_tatib='{$row['id_tatib']}' 
+                                            data-toggle='modal' data-target='#resendModal' onclick='populateResendForm(this)'>
+                                            Kirim Ulang
+                                        </button>
+
                                             <button type='button' class='btn btn-md btn-danger btn-hapus' data-id='{$row['id_pelanggaran']}' onclick='hapusData({$row['id_pelanggaran']})'>Hapus</button></td>";
                                         }
                                         echo "</tr>";
@@ -332,16 +338,27 @@ if ($session->get('is_login') !== true) {
             </script>
             <script>
                 function populateResendForm(button) {
+                    // Retrieve data from the button attributes
                     const id = button.getAttribute('data-id');
                     const nim = button.getAttribute('data-nim');
                     const nama = button.getAttribute('data-nama');
                     const idTatib = button.getAttribute('data-id_tatib');
+                    const idPelapor = button.getAttribute('data-id_pelapor');
+                    const idTerlapor = button.getAttribute('data-id_terlapor');
+                    const idDpa = button.getAttribute('data-id_dpa');
 
+                    // Populate the modal input fields with the corresponding values
                     document.getElementById('resend-id').value = id;
                     document.getElementById('resend-NIM').value = nim;
                     document.getElementById('resend-nama').value = nama;
                     document.getElementById('resend-id_tatib').value = idTatib;
+
+                    // Optional: If you want to populate any hidden fields or other elements, you can do it here
+                    // Example: document.getElementById('hidden-id-pelapor').value = idPelapor;
+                    // Example: document.getElementById('hidden-id-terlapor').value = idTerlapor;
+                    // Example: document.getElementById('hidden-id-dpa').value = idDpa;
                 }
+
             </script>
 
 
