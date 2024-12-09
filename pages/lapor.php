@@ -157,10 +157,10 @@ if ($session->get('is_login') !== true) {
                                         }
                                         echo "<td>{$row['status']}</td>";
                                         if ($row['status'] == 'pending') {
-                                            echo "<td>Mengunggu</td>";
+                                            echo "<td>Menunggu</td>";
                                         } else if ($row['status'] == 'rejected') {
                                             echo "<td>
-                                           <button type='button' class='btn btn-md btn-primary' data-id='{$row['id_pelanggaran']}' 
+                                            <button type='button' class='btn btn-md btn-primary' data-id='{$row['id_pelanggaran']}' 
                                             data-id_pelapor='{$row['id_pelapor']}' data-id_terlapor='{$row['id_terlapor']}' 
                                             data-id_dpa='{$row['id_dpa']}' data-id_tatib='{$row['id_tatib']}' 
                                             data-toggle='modal' data-target='#resendModal' onclick='populateResendForm(this)'>
@@ -215,8 +215,8 @@ if ($session->get('is_login') !== true) {
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="resend-form" action="action/userAction.php?act=update" method="post"
-                                enctype="multipart/form-data">
+                            <form id="resend-form" action="action/userAction.php?act=update&id_pelanggaran="
+                                method="post" enctype="multipart/form-data">
                                 <input type="hidden" id="resend-id" name="id_pelanggaran">
                                 <div class="form-group">
                                     <label for="resend-NIM">Nomor Induk</label>
@@ -352,6 +352,10 @@ if ($session->get('is_login') !== true) {
                     document.getElementById('resend-NIM').value = nim;
                     document.getElementById('resend-nama').value = nama;
                     document.getElementById('resend-id_tatib').value = idTatib;
+                    document.getElementById('resend-form').action = 'action/userAction.php?act=update&id_pelanggaran=' + id;
+
+                    // Open the modal
+                    $('#resendModal').modal('show');
 
                     // Optional: If you want to populate any hidden fields or other elements, you can do it here
                     // Example: document.getElementById('hidden-id-pelapor').value = idPelapor;

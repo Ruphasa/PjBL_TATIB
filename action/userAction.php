@@ -37,15 +37,11 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
         $i++;
     }
     echo json_encode($result);
-}
-
-elseif ($act == 'get') {
+} elseif ($act == 'get') {
     $pelanggaran = new PelanggaranModel();
     $data = $pelanggaran->getDataById($id);
     echo json_encode($data);
-}
-
-elseif ($act == 'save') {
+} elseif ($act == 'save') {
     // Check if POST data is set before using it
     $data = [
         'id_pelapor' => isset($_POST['id_pelapor']) ? antiSqlInjection($_POST['id_pelapor']) : '',
@@ -63,30 +59,54 @@ elseif ($act == 'save') {
         'status' => true,
         'message' => 'Data berhasil disimpan.'
     ]);
-}
+} elseif ($act == 'update') {
+    if (isset($_POST['NIM']) && isset($_POST['id_tatib']) && isset($_FILES['lampiran'])) {
+        // Get the NIM details
+        $row = $model->getDataByNim($_POST['NIM']);
+        $id_pelanggaran = (isset($_GET['id_pelanggaran']) && ctype_digit($_GET['id_pelanggaran'])) ? $_GET['id_pelanggaran'] : 0;
+        if (!$row) {
+            echo json_encode(['status' => false, 'message' => 'NIM tidak ditemukan.']);
+            exit;
+        }
 
-elseif ($act == 'update') {
-    $id_pelanggaran = (isset($_GET['id_pelanggaran']) && ctype_digit($_GET['id_pelanggaran'])) ? $_GET['id_pelanggaran'] : 0;
-    // Check if POST data is set before using it
-    $data = [
-        'id_pelapor' => isset($_POST['id_pelapor']) ? antiSqlInjection($_POST['id_pelapor']) : '',
-        'id_terlapor' => isset($_POST['id_terlapor']) ? antiSqlInjection($_POST['id_terlapor']) : '',
-        'id_dpa' => isset($_POST['id_dpa']) ? antiSqlInjection($_POST['id_dpa']) : '',
-        'id_tatib' => isset($_POST['id_tatib']) ? antiSqlInjection($_POST['id_tatib']) : '',
-        'lampiran' => isset($_POST['lampiran']) ? antiSqlInjection($_POST['lampiran']) : '',
-        'status' => 'pending'
-    ];
+        // Get the form data
+        $id_terlapor = $_POST['NIM'];
+        $id_dpa = $row['id_dpa'];
+        $id_tatib = $_POST['id_tatib'];
+        $lampiran = $_FILES['lampiran'];
+        $status = 'pending';
 
-    $pelanggaran = new PelanggaranModel();
-    $pelanggaran->updateData($id_pelanggaran, $data);
+        // Debugging: Print the received data
+        error_log("ID Pelapor: " . $id);
+        error_log("ID Terlapor: " . $id_terlapor);
+        error_log("ID DPA: " . $id_dpa);
+        error_log("ID Tatib: " . $id_tatib);
+        error_log("Lampiran: " . print_r($lampiran, true));
+        error_log("Status: " . $status);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil diupdate.'
-    ]);
-}
+        // Perform necessary validations and file upload processing
+        $target_dir = "../uploads/";
+        $file_name = str_replace(' ', '_', basename($lampiran["name"]));
+        $target_file = $target_dir . $file_name;
 
-elseif ($act == 'lapor') {
+        if (move_uploaded_file($lampiran["tmp_name"], $target_file)) {
+            // Insert data into the database
+            $data = [
+                'id_pelapor' => $id,
+                'id_terlapor' => $id_terlapor,
+                'id_dpa' => $id_dpa,
+                'id_tatib' => $id_tatib,
+                'lampiran' => $file_name,
+                'status' => $status
+            ];
+            $pelanggaran = new PelanggaranModel();
+            $pelanggaran->updateData($id_pelanggaran, $data);
+            header ('Location: ../index.php');
+        }
+    } else {
+        echo json_encode(['status' => false, 'message' => 'Form tidak lengkap.']);
+    }
+} elseif ($act == 'lapor') {
     // Ensure the necessary POST variables are set
     if (isset($_POST['NIM']) && isset($_POST['id_tatib']) && isset($_FILES['lampiran'])) {
         // Get the NIM details
@@ -141,7 +161,7 @@ elseif ($act == 'lapor') {
         'status' => true,
         'message' => 'Data berhasil dihapus.'
     ]);
-}else {
+} else {
     echo json_encode(['status' => false, 'message' => 'Aksi tidak valid.']);
 }
 ?>

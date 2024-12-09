@@ -80,14 +80,14 @@ class PelanggaranModel extends Model
     public function updateData($id, $data)
     {
         // Query untuk update data
-        $query = $this->db->prepare("UPDATE {$this->table} SET id_pelapor = ?, id_terlapor = ?, id_dpa = ?, id_tatib = ?, lampiran = ? WHERE id_pelanggaran = ?");
+        $query = $this->db->prepare("UPDATE {$this->table} SET id_pelapor = ?, id_terlapor = ?, id_dpa = ?, id_tatib = ?, lampiran = ?, status = ? WHERE id_pelanggaran = ?");
 
         if ($query === false) {
             die('Prepare failed: ' . htmlspecialchars($this->db->error));
         }
 
         // Binding parameter ke query
-        $query->bind_param('sssssi', $data['id_pelapor'], $data['id_terlapor'], $data['id_dpa'], $data['id_tatib'], $data['lampiran'], $id);
+        $query->bind_param('ssssssi', $data['id_pelapor'], $data['id_terlapor'], $data['id_dpa'], $data['id_tatib'], $data['lampiran'], $data['status'], $id);
 
         // Eksekusi query
         $success = $query->execute();
