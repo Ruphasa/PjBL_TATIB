@@ -91,12 +91,13 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
 
         if (move_uploaded_file($lampiran["tmp_name"], $target_file)) {
             // Insert data into the database
+            $target_file='uploads/'.$file_name;
             $data = [
                 'id_pelapor' => $id,
                 'id_terlapor' => $id_terlapor,
                 'id_dpa' => $id_dpa,
                 'id_tatib' => $id_tatib,
-                'lampiran' => $file_name,
+                'lampiran' => $target_file,
                 'status' => $status
             ];
             $pelanggaran = new PelanggaranModel();
@@ -133,10 +134,11 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
         // Perform necessary validations and file upload processing
         $target_dir = "../uploads/";
         $file_name = str_replace(' ', '_', basename($lampiran["name"]));
-        $target_file = $target_dir . $file_name;
+        $target_file = $target_dir.$file_name;
 
         if (move_uploaded_file($lampiran["tmp_name"], $target_file)) {
             // Insert data into the database
+            $target_file='uploads/'.$file_name;
             $query = $db->prepare('INSERT INTO pelanggaran (id_pelapor, id_terlapor, id_dpa, id_tatib, lampiran, status) VALUES (?, ?, ?, ?, ?, ?)');
             $query->bind_param('ssssss', $id, $id_terlapor, $id_dpa, $id_tatib, $target_file, $status);
 
@@ -161,7 +163,40 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
         'status' => true,
         'message' => 'Data berhasil dihapus.'
     ]);
-} else {
+} else if($act == 'kirim'){
+        // Get the NIM details
+        if (isset($_GET['id_pelanggaran'])) {
+        $id_pelanggaran = (isset($_GET['id_pelanggaran']) && ctype_digit($_GET['id_pelanggaran'])) ? $_GET['id_pelanggaran'] : 0;
+        $lampiran = $_FILES['lampiran'];
+        $status = 'hold';
+
+        // Debugging: Print the received data
+        error_log("Lampiran: " . print_r($lampiran, true));
+        error_log("Status: " . $status);
+
+        // Perform necessary validations and file upload processing
+        $target_dir = "../uploads/";
+        $file_name = str_replace(' ', '_', basename($lampiran["name"]));
+        $target_file = $target_dir . $file_name;
+
+        if (move_uploaded_file($lampiran["tmp_name"], $target_file)) {
+            // Insert data into the database
+            $target_file='uploads/'.$file_name;
+            $query = $db->prepare('UPDATE pelanggaran SET lampiran = ?, status = ? WHERE id_pelanggaran = ?');
+            $query->bind_param('ssi', $target_file, $status, $id_pelanggaran);
+
+            if ($query->execute()) {
+                echo json_encode(['status' => true, 'message' => 'Data berhasil dikirim!']);
+                // Redirect to the home page or any other desired page
+            } else {
+                error_log('Error executing query: ' . $query->error);
+                echo json_encode(['status' => false, 'message' => 'Gagal mengirim data.']);
+            }
+        }
+    }else {
+        echo json_encode(['status' => false, 'message' => 'Form tidak lengkap.']);
+    }
+}else {
     echo json_encode(['status' => false, 'message' => 'Aksi tidak valid.']);
 }
 ?>

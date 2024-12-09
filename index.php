@@ -5,7 +5,6 @@ $session = new Session();
 if ($session->get('is_login') !== true) {
   header('Location: login.php');
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +15,9 @@ if ($session->get('is_login') !== true) {
   <title>Siakad</title>
 
   <!-- DataTables -->
-  <link rel="stylesheet" href="adminLTE/plugins/datatablesbs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="adminLTE/plugins/datatablesresponsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="adminLTE/plugins/datatablesbuttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="adminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -27,12 +26,21 @@ if ($session->get('is_login') !== true) {
   <link rel="stylesheet" href="adminLTE/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="adminLTE/dist/css/adminlte.min.css">
-  <!-- bootstrap icon -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Bootstrap icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
   <!-- jQuery -->
   <script src="adminLTE/plugins/jquery/jquery.min.js"></script>
-
 
   <style>
     table {
@@ -53,33 +61,29 @@ if ($session->get('is_login') !== true) {
   </style>
 </head>
 
-<body style="height:100%" width="100%">
+<body class="hold-transition sidebar-mini layout-fixed">
   <!-- Site wrapper -->
-  <div class="wrapper" style="height:100%">
-    <!-- Navbar -->
+  <div class="wrapper">
     <?php include('layouts/header.php'); ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <!-- <a href="../adminLTE/index3.html" class="brand-link">
-        <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light"></span>
-      </a> -->
 
       <!-- Sidebar -->
       <?php
       if ($session->get('role') == 'admin') {
         include('layouts/sidebarAdmin.php');
-      } else if ($session->get('role') == 'user') {
+      } else if ($session->get('role') == 'dosen'|| $session->get('role') == 'mahasiswa') {
         include('layouts/sidebar.php');
       }
       ?>
       <!-- /.sidebar -->
     </aside>
+    <!-- Navbar -->
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
+      <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <?php
@@ -99,7 +103,7 @@ if ($session->get('is_login') !== true) {
                 include('pages/riwayat.php');
                 break;
             }
-          } else if ($session->get('role') == 'user') {
+          } else if ($session->get('role') == 'mahasiswa'|| $session->get('role') == 'dosen') {
             $page = isset($_GET['page']) ? $_GET['page'] : 'pelanggaranmu';
             switch (strtolower($page)) {
               case 'pelanggaranmu':
@@ -113,8 +117,8 @@ if ($session->get('is_login') !== true) {
           ?>
         </div>
       </section>
-      <?php include('layouts/footer.php'); ?>
     </div><!-- /.content-wrapper -->
+    <?php include('layouts/footer.php'); ?>
   </div><!-- ./wrapper -->
 
   <!-- Bootstrap 4 -->
@@ -126,8 +130,8 @@ if ($session->get('is_login') !== true) {
   <!-- DataTables  & Plugins -->
   <script src="adminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="adminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="adminLTE/plugins/datatablesresponsive/js/dataTables.responsive.min.js"></script>
-  <script src="adminLTE/plugins/datatablesresponsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="adminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="adminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="adminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
   <script src="adminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
   <script src="adminLTE/plugins/jszip/jszip.min.js"></script>

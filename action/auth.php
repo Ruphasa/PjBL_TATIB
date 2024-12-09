@@ -34,7 +34,7 @@ if ($act == 'login') {
         $session->set('is_login', true);
         $session->set('id', $id);
         $session->set('name', $dataMahasiswa['nama']);
-        $session->set('role', 'user');
+        $session->set('role', 'mahasiswa');
         $session->commit();
 
         header('Location: ../index.php');
@@ -50,7 +50,7 @@ if ($act == 'login') {
         $session->set('is_login', true);
         $session->set('id', $id);
         $session->set('name', $dataDosen['nama']);
-        $session->set('role', 'user');
+        $session->set('role', 'dosen');
         $session->commit();
 
         header('Location: ../index.php');

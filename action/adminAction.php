@@ -28,7 +28,7 @@ if($act == 'verifikasi'){
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
     $pelanggaran = new adminModel();
-    $pelanggaran->updateData($id, 'selesai');
+    $pelanggaran->updateData($id, 'done');
 
     echo json_encode([
         'status' => true,

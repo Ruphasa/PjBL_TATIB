@@ -37,7 +37,7 @@
             </div>
             <div class="card-body">
                 <!-- /.Card Header -->
-                <section class="content">
+                <section class="content" style="margin-bottom: 100px;">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Daftar Pelanggaran</h3>
@@ -82,7 +82,7 @@
                                                 # code...
                                                 echo "<td>Tidak ada lampiran</td>";
                                             } else {
-                                                echo "<img href='" . $row['lampiran'] . "' src=" . $row['lampiran'] . " style='height: 100px;'>";
+                                                echo "<img src=" . $row['lampiran'] . " style='height: 100px;'>";
                                             }
                                             echo "</td>";
                                             echo "<td><button type='button' class='btn btn-md btn-primary' onclick='verifikasiData({$row['id_pelanggaran']})'>selesai</button> <button type='button' class='btn btn-md btn-danger' onclick='tolakData({$row['id_pelanggaran']})'>revisi</button></td>";
@@ -90,7 +90,7 @@
                                             $no++;
                                         }
                                     } else {
-                                        echo "<tr><td colspan='7'>Tidak ada data.</td></tr>";
+                                        echo "<tr><td colspan='9'>Tidak ada data.</td></tr>";
                                     }
                                     ?>
                                 </tbody>
