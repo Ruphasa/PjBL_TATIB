@@ -62,7 +62,7 @@ $session = new Session();
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where id_terlapor = '".$_SESSION['id']."' and status = 'ongoing'";
+                        $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where id_terlapor = '".$_SESSION['id']."' and status = 'ongoing' or status = 'revisi'";
                         $result = $db->query($query);
                         if ($result->num_rows > 0) {
                             $no = 1;

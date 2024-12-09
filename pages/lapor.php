@@ -110,106 +110,169 @@ if ($session->get('is_login') !== true) {
                 </section>
             </div>
         </div>
-    </section>
 
-    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="uploadModalLabel">Upload File</h5> <button type="button" class="close"
-                        data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                </div>
-                <div class="modal-body">
-                    <div id="drop-zone" class="border border-primary p-4 text-center">
-                        <p>Drag & drop file here or click to upload</p> <input type="file" id="file-input"
-                            class="d-none">
+        <div class="card-body">
+            <!-- /.Card Header -->
+            <section class="content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lapor Pending</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm table-bordered table-striped" id="table-data">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID Pelanggaran</th>
+                                    <th>ID Pelapor</th>
+                                    <th>ID Terlapor</th>
+                                    <th>ID DPA</th>
+                                    <th>ID Tatib</th>
+                                    <th>Sanksi</th>
+                                    <th>Lampiran</th>
+                                    <th>status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where status = 'pending' or status = 'rejected' and id_pelapor = '" . $_SESSION['id'] . "'";
+                                $result = $db->query($query);
+                                if ($result->num_rows > 0) {
+                                    $no = 1;
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>{$no}</td>";
+                                        echo "<td>{$row['id_pelanggaran']}</td>";
+                                        echo "<td>{$row['id_pelapor']}</td>";
+                                        echo "<td>{$row['id_terlapor']}</td>";
+                                        echo "<td>{$row['id_dpa']}</td>";
+                                        echo "<td>{$row['id_tatib']}</td>";
+                                        echo "<td>{$row['Sanksi']}</td>";
+                                        if (empty($row['lampiran'])) {
+                                            # code...
+                                            echo "<td>Tidak ada lampiran</td>";
+                                        } else {
+                                            echo "<td><img src= ('" . $row['lampiran'] . "') style='height: 100px;'></td>";
+                                        }
+                                        echo "<td>{$row['status']}</td>";
+                                        if ($row['status'] == 'pending') {
+                                            echo "<td>Mengunggu</td>";
+                                        }else if($row['status'] == 'rejected'){
+                                            echo "<td><button type='button' class='btn btn-md btn-primary'>kirim ulang</button> <button type='button' class='btn btn-md btn-danger'>hapus</button></td>";
+                                        }
+                                        echo "</tr>";
+                                        $no++;
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='9'>Tidak ada data.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="modal-footer"> <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary"
-                        id="upload-btn">Upload</button> </div>
-            </div>
-        </div>
+            </section>
 
-        <script> document.addEventListener('DOMContentLoaded', function () {
-                const dropZone = document.getElementById('drop-zone'); const fileInput = document.getElementById('file-input'); const fileDisplay = document.getElementById('file-display'); dropZone.addEventListener('click', function () { fileInput.click(); }); dropZone.addEventListener('dragover', function (e) { e.preventDefault(); dropZone.classList.add('bg-light'); }); dropZone.addEventListener('dragleave', function (e) { e.preventDefault(); dropZone.classList.remove('bg-light'); }); dropZone.addEventListener('drop', function (e) { e.preventDefault(); dropZone.classList.remove('bg-light'); const files = e.dataTransfer.files; handleFiles(files); }); fileInput.addEventListener('change', function (e) { const files = e.target.files; handleFiles(files); }); function handleFiles(files) {
-                    if (files.length > 0) {
-                        fileDisplay.value = files[0].name; fileInput.files = files;
-                        // Ensure the file input has the files for form submission 
-                        $('#uploadModal').modal('hide');
-                    }
-                }
-                // Trigger form submit button click on modal upload button click 
-                document.getElementById('upload-btn').addEventListener('click', function () {
-                    if (fileInput.files.length > 0) {
-                        // Manually trigger change event to update the form input 
-                        fileInput.dispatchEvent(new Event('change'));
-                    }
-                });
-            }); </script>
+            <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="uploadModalLabel">Upload File</h5> <button type="button"
+                                class="close" data-dismiss="modal" aria-label="Close"> <span
+                                    aria-hidden="true">&times;</span> </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="drop-zone" class="border border-primary p-4 text-center">
+                                <p>Drag & drop file here or click to upload</p> <input type="file" id="file-input"
+                                    class="d-none">
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary"
+                                id="upload-btn">Upload</button> </div>
+                    </div>
+                </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Custom file input label
-                document.querySelector(".custom-file-input").addEventListener("change", function (e) {
-                    var fileName = document.getElementById("lampiran").files[0].name;
-                    var nextSibling = e.target.nextElementSibling
-                    nextSibling.innerText = fileName
-                });
-            });
-        </script>
-
-        <script>
-            $(document).ready(function () {
-                $('#form-lapor').validate({
-                    rules: {
-                        NIM: {
-                            required: true,
-                            digits: true,
-                            minlength: 8,
-                            maxlength: 15
-                        },
-                        nama: {
-                            required: true,
-                            minlength: 3
-                        },
-                        id_tatib: {
-                            required: true,
-                        },
-                        lampiran: {
-                            required: true,
-                            extension: "jpg|jpeg|png|pdf"
+                <script> document.addEventListener('DOMContentLoaded', function () {
+                        const dropZone = document.getElementById('drop-zone'); const fileInput = document.getElementById('file-input'); const fileDisplay = document.getElementById('file-display'); dropZone.addEventListener('click', function () { fileInput.click(); }); dropZone.addEventListener('dragover', function (e) { e.preventDefault(); dropZone.classList.add('bg-light'); }); dropZone.addEventListener('dragleave', function (e) { e.preventDefault(); dropZone.classList.remove('bg-light'); }); dropZone.addEventListener('drop', function (e) { e.preventDefault(); dropZone.classList.remove('bg-light'); const files = e.dataTransfer.files; handleFiles(files); }); fileInput.addEventListener('change', function (e) { const files = e.target.files; handleFiles(files); }); function handleFiles(files) {
+                            if (files.length > 0) {
+                                fileDisplay.value = files[0].name; fileInput.files = files;
+                                // Ensure the file input has the files for form submission 
+                                $('#uploadModal').modal('hide');
+                            }
                         }
-                    },
-                    messages: {
-                        NIM: {
-                            required: "Nomor Induk wajib diisi.",
-                            digits: "Nomor Induk harus berupa angka.",
-                            minlength: "Nomor Induk minimal 8 karakter.",
-                            maxlength: "Nomor Induk maksimal 15 karakter."
-                        },
-                        nama: {
-                            required: "Nama wajib diisi.",
-                            minlength: "Nama minimal 3 karakter."
-                        },
-                        id_tatib: {
-                            required: "Silakan pilih aturan yang dilanggar."
-                        },
-                        lampiran: {
-                            required: "Lampiran wajib diunggah.",
-                            extension: "File harus berupa format jpg, jpeg, png, atau pdf."
-                        }
-                    },
-                });
+                        // Trigger form submit button click on modal upload button click 
+                        document.getElementById('upload-btn').addEventListener('click', function () {
+                            if (fileInput.files.length > 0) {
+                                // Manually trigger change event to update the form input 
+                                fileInput.dispatchEvent(new Event('change'));
+                            }
+                        });
+                    }); </script>
 
-                // Custom file input label
-                $(".custom-file-input").on("change", function () {
-                    var fileName = $(this).val().split("\\").pop();
-                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                });
-            });
-        </script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Custom file input label
+                        document.querySelector(".custom-file-input").addEventListener("change", function (e) {
+                            var fileName = document.getElementById("lampiran").files[0].name;
+                            var nextSibling = e.target.nextElementSibling
+                            nextSibling.innerText = fileName
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        $('#form-lapor').validate({
+                            rules: {
+                                NIM: {
+                                    required: true,
+                                    digits: true,
+                                    minlength: 8,
+                                    maxlength: 15
+                                },
+                                nama: {
+                                    required: true,
+                                    minlength: 3
+                                },
+                                id_tatib: {
+                                    required: true,
+                                },
+                                lampiran: {
+                                    required: true,
+                                    extension: "jpg|jpeg|png|pdf"
+                                }
+                            },
+                            messages: {
+                                NIM: {
+                                    required: "Nomor Induk wajib diisi.",
+                                    digits: "Nomor Induk harus berupa angka.",
+                                    minlength: "Nomor Induk minimal 8 karakter.",
+                                    maxlength: "Nomor Induk maksimal 15 karakter."
+                                },
+                                nama: {
+                                    required: "Nama wajib diisi.",
+                                    minlength: "Nama minimal 3 karakter."
+                                },
+                                id_tatib: {
+                                    required: "Silakan pilih aturan yang dilanggar."
+                                },
+                                lampiran: {
+                                    required: "Lampiran wajib diunggah.",
+                                    extension: "File harus berupa format jpg, jpeg, png, atau pdf."
+                                }
+                            },
+                        });
+
+                        // Custom file input label
+                        $(".custom-file-input").on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                        });
+                    });
+                </script>
 </body>
 
 </html>

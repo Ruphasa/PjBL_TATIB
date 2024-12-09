@@ -73,9 +73,9 @@
                                             # code...
                                             echo "<td>Tidak ada lampiran</td>";
                                         } else {
-                                            echo "<td><img src=" . $row['lampiran'] . " style='height: 100px;'></td>";
+                                            echo "<td><img src= ('" . $row['lampiran'] . "') style='height: 100px;'></td>";
                                         }
-                                        echo "<td><button type='button' class='btn btn-md btn-primary'>Verifikasi</button> <button type='button' class='btn btn-md btn-danger'>Tolak</button></td>";
+                                        echo "<td><button type='button' class='btn btn-md btn-primary' onclick='verifikasiData({$row['id_pelanggaran']})'>Verifikasi</button> <button type='button' class='btn btn-md btn-danger' onclick='tolakData({$row['id_pelanggaran']})'>Tolak</button></td>";
                                         echo "</tr>";
                                         $no++;
                                     }
@@ -93,6 +93,18 @@
 <script>
     function tambahData() {
         alert('Form tambah data dapat diimplementasikan di sini.');
+    }
+
+    function verifikasiData(id) {
+        if (confirm('Apakah Anda yakin ingin memverifikasi data ini?')) {
+            window.location.href = 'action/adminAction.php?act=verifikasi&id=' + id; 
+        }
+    }
+    
+    function tolakData(id) {
+        if (confirm('Apakah Anda yakin ingin menolak data ini?')) {
+            window.location.href = 'action/adminAction.php?act=reject&id=' + id; 
+        }
     }
 
     $(document).ready(function () {

@@ -6,7 +6,7 @@ include_once('../lib/Connection.php');
 
 $session = new Session();
 $model = new PelanggaranModel();
-$id=$session->get('id');
+$id = $session->get('id');
 
 if ($session->get('is_login') !== true) {
     header('Location: login.php');
@@ -119,7 +119,8 @@ if ($act == 'lapor') {
 
     // Perform necessary validations and file upload processing
     $target_dir = "../uploads/";
-    $target_file = $target_dir . basename($lampiran["name"]);
+    $file_name = str_replace(' ', '_', basename($lampiran["name"]));
+    $target_file = $target_dir . $file_name;
 
     if (move_uploaded_file($lampiran["tmp_name"], $target_file)) {
         // Insert data into the database
@@ -144,4 +145,3 @@ if ($act == 'lapor') {
     echo json_encode(['status' => false, 'message' => 'Aksi tidak valid.']);
 }
 ?>
-
