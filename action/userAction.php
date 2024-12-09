@@ -125,60 +125,16 @@ if ($act == 'lapor') {
             error_log('Error executing query: ' . $query->error);
             echo json_encode(['status' => false, 'message' => 'Gagal menyimpan data.']);
         }
-    
-    if ($_GET['act'] === 'delete') {
-    include('lib/Connection.php');
-    $id = $_POST['id'];
-
-    // Debugging: Cetak ID
-    error_log("ID diterima: " . $id);
-
-    if (!empty($id)) {
-        $query = $db->prepare("DELETE FROM pelanggaran WHERE id_pelanggaran = ?");
-        $query->bind_param("i", $id);
-
-        if ($query->execute()) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Gagal menghapus data di database.']);
-        }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'ID tidak valid.']);
     }
-    exit;
-}
-
-if ($act == 'delete') {
-    // Pastikan request adalah POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $idPelanggaran = intval($_POST['id_pelanggaran']); // Validasi ID Pelanggaran
-
-        // Cek apakah ID Pelanggaran valid
-        if ($idPelanggaran <= 0) {
-            echo json_encode(['success' => false, 'message' => 'ID tidak valid']);
-            exit;
-        }
-
-        // Hapus data dari database
-        $query = "DELETE FROM pelanggaran WHERE id_pelanggaran = ?";
-        $stmt = $db->prepare($query);
-        $stmt->bind_param('i', $idPelanggaran);
-
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Data berhasil dihapus']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Gagal menghapus data']);
-        }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Metode request tidak valid']);
-    }
-}
-        
-        $query->close();
-    } else {
-        echo json_encode(['status' => false, 'message' => 'Gagal mengunggah lampiran.']);
-    }
-} else {
+} else if ($act == 'delete') {
+    $id_pelanggaran = (isset($_GET['id_pelanggaran']) && ctype_digit($_GET['id_pelanggaran'])) ? $_GET['id_pelanggaran'] : 0;
+    $pelanggaran = new PelanggaranModel();
+    $pelanggaran->deleteData($id_pelanggaran);
+    echo json_encode([
+        'status' => true,
+        'message' => 'Data berhasil dihapus.'
+    ]);
+}else {
     echo json_encode(['status' => false, 'message' => 'Aksi tidak valid.']);
 }
 ?>

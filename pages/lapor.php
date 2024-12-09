@@ -160,7 +160,7 @@ if ($session->get('is_login') !== true) {
                                             echo "<td>Mengunggu</td>";
                                         } else if ($row['status'] == 'rejected') {
                                             echo "<td><button type='button' class='btn btn-md btn-primary'>kirim ulang</button> 
-                                            <button type='button' class='btn btn-md btn-danger btn-hapus' data-id='{$row['id_pelanggaran']}'>hapus</button></td>";
+                                            <button type='button' class='btn btn-md btn-danger btn-hapus' data-id='{$row['id_pelanggaran']}' onclick='hapusData({$row['id_pelanggaran']})'>hapus</button></td>";
 
                                         }
                                         echo "</tr>";
@@ -276,41 +276,11 @@ if ($session->get('is_login') !== true) {
                     });
                 </script>
                 <script>
-                    $(document).ready(function () {
-                        // Event handler untuk tombol hapus
-                        $(document).on('click', '.btn-hapus', function () {
-                            var idPelanggaran = $(this).data('id'); // Ambil ID Pelanggaran dari data-id tombol
-
-                            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                                // Kirim AJAX request ke server
-                                $.ajax({
-                                    url: 'action/userAction.php?act=delete', // Ganti dengan endpoint PHP untuk menghapus data
-                                    type: 'POST',
-                                    data: { id_pelanggaran: idPelanggaran },
-                                    success: function (response) {
-                                        try {
-                                            const res = JSON.parse(response);
-                                            if (res.success) {
-                                                alert('Data berhasil dihapus!');
-                                                // Hapus baris dari tabel secara dinamis
-                                                $(`button[data-id="${idPelanggaran}"]`).closest('tr').remove();
-                                            } else {
-                                                alert('Gagal menghapus data: ' + res.message);
-                                            }
-                                        } catch (error) {
-                                            console.error('Respon tidak valid:', error);
-                                            alert('Terjadi kesalahan pada server.');
-                                        }
-                                    },
-                                    error: function (xhr, status, error) {
-                                        console.error('AJAX Error:', status, error);
-                                        alert('Terjadi kesalahan saat menghubungi server.');
-                                    }
-                                });
-                            }
-                        });
-                    });
-
+                    function hapusData(id) {
+                        if (confirm('Apakah Anda yakin ingin memverifikasi data ini?')) {
+                            window.location.href = 'action/userAction.php?act=delete&id_pelanggaran=' + id;
+                        }
+                    }
                 </script>
 </body>
 

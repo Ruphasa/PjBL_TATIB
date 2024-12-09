@@ -79,7 +79,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="index.php?page=lapor" class="nav-link">
-                        <i class="bi bi-clock" style="font-size: 2rem; color:606C7D"></i>
+                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color:606C7D"></i>
                         <p>Laporkan</p>
                     </a>
                 </li>
