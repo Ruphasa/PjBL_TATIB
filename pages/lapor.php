@@ -159,8 +159,11 @@ if ($session->get('is_login') !== true) {
                                         if ($row['status'] == 'pending') {
                                             echo "<td>Mengunggu</td>";
                                         } else if ($row['status'] == 'rejected') {
-                                            echo "<td><button type='button' class='btn btn-md btn-primary'>kirim ulang</button> 
-                                            <button type='button' class='btn btn-md btn-danger btn-hapus' data-id='{$row['id_pelanggaran']}' onclick='hapusData({$row['id_pelanggaran']})'>hapus</button></td>";
+                                            echo "<td>
+                                            <button type='button' class='btn btn-md btn-primary' data-id='{$row['id_pelanggaran']}' data-id_dpa='{$row['id_dpa']}' data-id_pelapor='{$row['id_pelapor']}' data-id_tatib='{$row['id_tatib']}' data-toggle='modal' data-target='#resendModal' onclick='populateResendForm(this)'>Kirim Ulang</button> 
+                                            <button type='button' class='btn btn-md btn-danger btn-hapus' data-id='{$row['id_pelanggaran']}' onclick='hapusData({$row['id_pelanggaran']})'>Hapus</button>
+                                          </td>";
+
 
                                         }
                                         echo "</tr>";
@@ -196,6 +199,7 @@ if ($session->get('is_login') !== true) {
                                 id="upload-btn">Upload</button> </div>
                     </div>
                 </div>
+
 
                 <script> document.addEventListener('DOMContentLoaded', function () {
                         const dropZone = document.getElementById('drop-zone'); const fileInput = document.getElementById('file-input'); const fileDisplay = document.getElementById('file-display'); dropZone.addEventListener('click', function () { fileInput.click(); }); dropZone.addEventListener('dragover', function (e) { e.preventDefault(); dropZone.classList.add('bg-light'); }); dropZone.addEventListener('dragleave', function (e) { e.preventDefault(); dropZone.classList.remove('bg-light'); }); dropZone.addEventListener('drop', function (e) { e.preventDefault(); dropZone.classList.remove('bg-light'); const files = e.dataTransfer.files; handleFiles(files); }); fileInput.addEventListener('change', function (e) { const files = e.target.files; handleFiles(files); }); function handleFiles(files) {
@@ -282,6 +286,69 @@ if ($session->get('is_login') !== true) {
                         }
                     }
                 </script>
+
+                <div class="modal fade" id="resendModal" tabindex="-1" role="dialog" aria-labelledby="resendModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="resendModalLabel">Kirim Ulang Laporan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="resend-form" action="action/userAction.php?act=update" method="post"
+                                    enctype="multipart/form-data">
+                                    <input type="hidden" id="resend-id" name="id_pelanggaran">
+                                    <div class="form-group">
+                                        <label for="resend-NIM">Nomor Induk</label>
+                                        <input type="text" class="form-control" id="resend-NIM" name="NIM" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="resend-nama">Nama</label>
+                                        <input type="text" class="form-control" id="resend-nama" name="nama" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="resend-id_tatib">Aturan yang dilanggar</label>
+                                        <select class="form-control" id="resend-id_tatib" name="id_tatib" required>
+                                            <option value="">Pilih Aturan</option>
+                                            <?php
+                                            $queryTatib->execute();
+                                            $dataTatib = $queryTatib->get_result();
+                                            while ($row = $dataTatib->fetch_assoc()) {
+                                                echo "<option value='" . $row['id_tatib'] . "'>" . $row['aturan'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="resend-lampiran">Lampiran</label>
+                                        <input type="file" class="form-control-file" id="resend-lampiran"
+                                            name="lampiran" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Kirim Ulang</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function populateResendForm(button) {
+                        const id = button.getAttribute('data-id');
+                        const nim = button.getAttribute('data-nim');
+                        const nama = button.getAttribute('data-nama');
+                        const idTatib = button.getAttribute('data-id_tatib');
+
+                        document.getElementById('resend-id').value = id;
+                        document.getElementById('resend-NIM').value = nim;
+                        document.getElementById('resend-nama').value = nama;
+                        document.getElementById('resend-id_tatib').value = idTatib;
+                    }
+                </script>
+
+
+
 </body>
 
 </html>
