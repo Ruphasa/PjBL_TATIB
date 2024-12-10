@@ -24,6 +24,7 @@ if($act == 'verifikasi'){
         'status' => true,
         'message' => 'Data berhasil diverifikasi.'
     ]);
+    header('Location: ../index.php');
 }else if($act == 'selesai'){
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
@@ -34,6 +35,8 @@ if($act == 'verifikasi'){
         'status' => true,
         'message' => 'Data berhasil diselesaikan.'
     ]);
+
+    header('Location: ../index.php');
 }else if($act == 'reject'){
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
@@ -44,6 +47,8 @@ if($act == 'verifikasi'){
         'status' => true,
         'message' => 'Data berhasil ditolak.'
     ]);
+
+    header('Location: ../index.php');
 }else if($act == 'revisi'){
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
@@ -54,5 +59,7 @@ if($act == 'verifikasi'){
         'status' => true,
         'message' => 'Data kembali ke pelanggar.'
     ]);
+
+    header('Location: ../index.php');
 }
 ?>

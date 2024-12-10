@@ -188,6 +188,7 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
             if ($query->execute()) {
                 echo json_encode(['status' => true, 'message' => 'Data berhasil dikirim!']);
                 // Redirect to the home page or any other desired page
+                header('Location: ../index.php');
             } else {
                 error_log('Error executing query: ' . $query->error);
                 echo json_encode(['status' => false, 'message' => 'Gagal mengirim data.']);
