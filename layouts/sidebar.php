@@ -65,7 +65,11 @@
                     <i class="bi bi-exclamation-circle" style="font-size: 2rem; color:606C7D"></i>
                     <span class="badge badge-danger navbar-badge">
                     <?php
-                    $query = "SELECT * FROM pelanggaran where status = 'ongoing' or status = 'revisi'";
+                    if($_SESSION['role'] == 'dosen'){
+                        $query = "SELECT * FROM pelanggaran where id_dpa = '" . $_SESSION['id'] . "' and status = 'ongoing' or status = 'revisi'";
+                    }else if($_SESSION['role'] == 'mahasiswa'){
+                        $query = "SELECT * FROM pelanggaran where id_terlapor = '" . $_SESSION['id'] . "' and status = 'ongoing' or status = 'revisi'";
+                    }
                     $result = $db->query($query);
                     echo $result->num_rows;
                     ?>
@@ -77,6 +81,12 @@
                 <a href="index.php?page=lapor" class="nav-link">
                     <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color:606C7D"></i>
                     <p>Laporkan</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?page=riwayat" class="nav-link">
+                    <i class="bi bi-clock" style="font-size: 2rem; color:606C7D"></i>
+                    <p>Riwayat</p>
                 </a>
             </li>
             <li class="nav-item border">

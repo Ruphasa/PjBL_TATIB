@@ -130,7 +130,7 @@ if ($session->get('is_login') !== true) {
                                         <th>ID DPA</th>
                                         <th>ID Tatib</th>
                                         <th>Sanksi</th>
-                                        <th>Lampiran</th>
+                                        <th>Bukti Lapor</th>
                                         <th>status</th>
                                         <th>Aksi</th>
                                     </tr>

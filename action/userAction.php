@@ -71,7 +71,7 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
 
         // Get the form data
         $id_terlapor = $_POST['NIM'];
-        $id_dpa = $row['id_dpa'];
+        $id_dpa = $row['NIP'];
         $id_tatib = $_POST['id_tatib'];
         $lampiran = $_FILES['lampiran'];
         $status = 'pending';
@@ -119,7 +119,7 @@ onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i>
 
         // Get the form data
         $id_terlapor = $_POST['NIM'];
-        $id_dpa = $row['id_dpa'];
+        $id_dpa = $row['NIP'];
         $id_tatib = $_POST['id_tatib'];
         $lampiran = $_FILES['lampiran'];
         $status = 'pending';

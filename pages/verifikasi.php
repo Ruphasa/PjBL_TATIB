@@ -40,7 +40,7 @@
                 <section class="content" style="margin-bottom: 100px;">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Daftar Pelanggaran</h3>
+                            <h3 class="card-title">Daftar Pelanggaran Menunggu verifikasi</h3>
                             <!-- <div class="card-tools">
                     <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                         Tambah
@@ -58,7 +58,7 @@
                                         <th>ID DPA</th>
                                         <th>ID Tatib</th>
                                         <th>Sanksi</th>
-                                        <th>Lampiran</th>
+                                        <th>Bukti Sanksi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>

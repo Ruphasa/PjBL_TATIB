@@ -124,7 +124,7 @@ class PelanggaranModel extends Model
     public function getDataByNim($nim)
     {
         // Query untuk mengambil data berdasarkan NIM
-        $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE id_pelapor = ?");
+        $query = $this->db->prepare("SELECT * FROM mahasiswa as m inner join dosen as d on m.kelas = d.kelas  WHERE NIM = ?");
 
         if ($query === false) {
             die('Prepare failed: ' . htmlspecialchars($this->db->error));

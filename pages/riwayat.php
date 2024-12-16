@@ -40,7 +40,7 @@
                 <section class="content">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Daftar Pelanggaran</h3>
+                            <h3 class="card-title">Daftar Riwayat Pelanggaran</h3>
                             <!-- <div class="card-tools">
                     <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                         Tambah
@@ -58,11 +58,18 @@
                                         <th>ID DPA</th>
                                         <th>ID Tatib</th>
                                         <th>Sanksi</th>
+                                        <th>Bukti Sanksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where status = 'done'";
+                                    if($_SESSION['role'] == 'mahasiswa'){
+                                        $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where id_terlapor = '{$_SESSION['id']}'";
+                                    }elseif($_SESSION['role'] == 'dosen'){
+                                        $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where id_dpa = '{$_SESSION['id']}'";
+                                    }else{
+                                        $query = "SELECT * FROM pelanggaran as p inner join tatib as t on p.id_tatib = t.id_tatib where status = 'done'";
+                                    }
                                     $result = $db->query($query);
                                     if ($result->num_rows > 0) {
                                         $no = 1;
@@ -75,11 +82,12 @@
                                             echo "<td>{$row['id_dpa']}</td>";
                                             echo "<td>{$row['id_tatib']}</td>";
                                             echo "<td>{$row['Sanksi']}</td>";
+                                            echo "<td><img src= '" . $row['lampiran'] . "' style='height: 100px;'></td>";
                                             echo "</tr>";
                                             $no++;
                                         }
                                     } else {
-                                        echo "<tr><td colspan='7'>Tidak ada data.</td></tr>";
+                                        echo "<tr><td colspan='8'>Tidak ada data.</td></tr>";
                                     }
                                     ?>
                                 </tbody>

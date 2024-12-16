@@ -112,6 +112,9 @@ if ($session->get('is_login') !== true) {
               case 'lapor':
                 include('pages/lapor.php');
                 break;
+              case 'riwayat':
+                include('pages/riwayat.php');
+                break;
             }
           }
           ?>
